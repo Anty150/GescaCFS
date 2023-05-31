@@ -1,0 +1,90 @@
+.html, body{
+    height: 100%;
+}
+
+
+/* Styling the form container */
+.form {
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+/* Styling form labels */
+label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+/* Styling form inputs */
+input[type="text"],
+select {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+/* Styling form buttons */
+input[type="button"], input[type="submit"]{
+    padding: 10px 12px;
+    margin-right: 0;
+    margin-left: 5px;
+    border: none;
+    border-radius: 3px;
+    background-color: #4caf50;
+    color: #fff;
+    cursor: pointer;
+    float: right;
+}
+
+input:hover{
+    background-color: #45a049;
+}
+
+/* Styling the textbox container */
+.textBox {
+    padding: 10px;
+    margin-top: 40px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+/* Styling the content */
+.content{
+    float: left;
+    width: 80%;
+}
+
+/* Styling the navbar */
+.navbar {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px;
+    width: 20%;
+    height: 100%;
+}
+
+/* Styling the navbar links */
+.navbar ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar ul li {
+    margin-bottom: 5px;
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.navbar ul li a:hover {
+    text-decoration: underline;
+}

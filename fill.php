@@ -9,34 +9,32 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="container">
-    <div class="navbar">
-        <ul>
-            <li><a href="create.php">Create</a></li>
-            <li><a href="fill.php">Fill</a></li>
-            <li><a href="see.php">See</a></li>
-        </ul>
-    </div>
-    <div class="content">
-        <div class="form">
-            <form action="fill.php" method="POST">
-                <label for="textFillName">Fill Name</label><input type="text" name="textFillName" id="textFillName">
-                </br>
-                <label for="comboSelect">Select</label>
-                <select name="comboSelect" id="comboSelect">
-                    <?php
-
-
-                    ?>
-                </select>
-                </br>
-                <div class="textbox">
-                    lorem lorem ipsum lorem
-                </div>
-                <input type="submit" name="submitSubmit" id="submitSubmit">
-            </form>
+    <div class="container">
+        <div class="navbar">
+            <ul>
+                <li><a href="create.php">Create</a></li>
+                <li><a href="fill.php">Fill</a></li>
+                <li><a href="see.php">See</a></li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="form">
+                <form action="fill.php" method="POST">
+                    <label for="textFillName">Fill Name: </label>
+                    <input type="text" name="textFillName" id="textFillName">
+                    <br>
+                    <label for="comboSelect">Select: </label>
+                    <select name="comboSelect" id="comboSelect">
+                        <!--- PHP CODE TO INSERT NAMES TO COMBOBOX -->
+                    </select>
+                    <br>
+                    <div class="textBox">
+                        lorem lorem ipsum lorem
+                    </div>
+                    <input type="submit" name="submitSubmit" id="submitSubmit">
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </body>
 </html>
