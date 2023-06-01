@@ -2,7 +2,6 @@ let i = 0;
 let clickHandler//
 let previousClickHandler;
 let previousId = "p0";
-let p_currentId = "p0";
 
 function addToTextBox(){
     let textFieldName = document.getElementById("textFieldName").value;
@@ -20,7 +19,7 @@ function getId(id) {
     p_previousId = document.getElementById(previousId);
     p_previousId.style.backgroundColor = "#f2f2f2";
 
-    p_currentId = document.getElementById(id);
+    let p_currentId = document.getElementById(id);
     p_currentId.style.backgroundColor = "#45a049";
 
 
@@ -31,7 +30,7 @@ function getId(id) {
 
     buttonRemove.addEventListener("click", clickHandler, false);
     previousClickHandler = clickHandler;
-    previousId = p_currentId;
+    previousId = id;
 }
 
 
