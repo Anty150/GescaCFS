@@ -98,6 +98,22 @@
         background-color: #f2f2f2;
         color: #333;
     }
+    .textBox p{
+        width: 100%;
+        height: 20px;
+        text-align: center;
+        margin: 0;
+    }
+
+    .textBox p:hover{
+        background-color: #45a049;
+    }
+
+    .textBox span{
+        width: 50%;
+        float: left;
+
+    }
 
     /* Styling the content */
     .content{

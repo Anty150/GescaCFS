@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="style2.css">
+    <script src="addToTextBox.js"></script>
 </head>
 <body>
     <div class="wrapper">
@@ -35,23 +36,18 @@
                         <span><select name="comboType" id="comboType">
                             <option value="A">A</option>
                             <option value="B">B</option>
-                            <option value="-">Other</option></span>
-                        </select>
+                            <option value="-">Other</option>
+                        </select></span>
                     </p>
 
                     <p>
-                        <input type="button" name="buttonAdd" id="buttonAdd" value="+">
+                        <input type="button" name="buttonAdd" id="buttonAdd" value="+" onclick="addToTextBox()">
                         <input type="button" name="buttonRemove" id="buttonRemove" value="-">
                     </p>
 
 
-                    <div class="textBox">
-                        <br>
-                        <br>
-                        TEXT
-                        <br>
-                        <br>
-                        <br>
+                    <div class="textBox" id="textBox">
+
                     </div>
                     <input type="submit" name="submitSubmit" id="submitSubmit">
                 </form>
