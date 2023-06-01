@@ -14,6 +14,9 @@ function addToTextBox(){
 
     textBox.innerHTML += p;
     i++;
+
+    let textBoxContent = textBox.innerHTML;
+    document.getElementById("textBoxContent").value = textBoxContent;
 }
 function getId(id) {
     p_previousId = document.getElementById(previousId);

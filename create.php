@@ -20,7 +20,7 @@
         </aside>
         <main>
             <div class="form">
-                <form action="create.php" method="POST">
+                <form action="addToDB.php" method="POST">
                     <p>
                         <span><label for="textName">Name</label></span>
                         <span><input type="text" name="textName" id="textName"></span>
@@ -45,7 +45,7 @@
                         <input type="button" name="buttonRemove" id="buttonRemove" value="-">
                     </p>
 
-
+                    <input type="hidden" name="textBoxContent" value="" id="textBoxContent">
                     <div class="textBox" id="textBox">
 
                     </div>
