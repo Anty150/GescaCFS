@@ -9,44 +9,54 @@
     <link rel="stylesheet" href="style2.css">
 </head>
 <body>
-<div class="container">
-    <div class="navbar">
-        <ul>
-            <li><a href="create.php">Create</a></li>
-            <li><a href="fill.php">Fill</a></li>
-            <li><a href="see.php">See</a></li>
-        </ul>
+    <div class="wrapper">
+        <aside>
+            <ul>
+                <li><a href="create.php">Create</a></li>
+                <li><a href="fill.php">Fill</a></li>
+                <li><a href="see.php">See</a></li>
+            </ul>
+        </aside>
+        <main>
+            <div class="form">
+                <form action="create.php" method="POST">
+                    <p>
+                        <span><label for="textName">Name</label></span>
+                        <span><input type="text" name="textName" id="textName"></span>
+                    </p>
+
+                    <p>
+                        <span><label for="textFieldName">Fieldname</label></span>
+                        <span><input type="text" name="textFieldName" id="textFieldName"></span>
+                    </p>
+
+                    <p>
+                        <span><label for="comboType">Type</label></span>
+                        <span><select name="comboType" id="comboType">
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="-">Other</option></span>
+                        </select>
+                    </p>
+
+                    <p>
+                        <input type="button" name="buttonAdd" id="buttonAdd" value="+">
+                        <input type="button" name="buttonRemove" id="buttonRemove" value="-">
+                    </p>
+
+
+                    <div class="textBox">
+                        <br>
+                        <br>
+                        TEXT
+                        <br>
+                        <br>
+                        <br>
+                    </div>
+                    <input type="submit" name="submitSubmit" id="submitSubmit">
+                </form>
+            </div>
+        </main>
     </div>
-    <div class="content">
-        <div class="form">
-            <form action="create.php" method="POST">
-                <label for="textName">Name: </label>
-                <input type="text" name="textName" id="textName">
-                <br>
-                <label for="textFieldName">Fieldname: </label>
-                <input type="text" name="textFieldName" id="textFieldName">
-                <br>
-                <label for="comboType">Type: </label>
-                <select name="comboType" id="comboType">
-                    <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="-">Other</option>
-                </select>
-                <br>
-                <input type="button" name="buttonAdd" id="buttonAdd" value="+">
-                <input type="button" name="buttonRemove" id="buttonRemove" value="-">
-                <br>
-                <div class="textBox">
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                    <br>
-                </div>
-                <input type="submit" name="submitSubmit" id="submitSubmit">
-            </form>
-        </div>
-    </div>
-</div>
 </body>
 </html>
