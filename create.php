@@ -35,8 +35,8 @@
                         <span><select name="comboType" id="comboType">
                             <option value="A">A</option>
                             <option value="B">B</option>
-                            <option value="-">Other</option></span>
-                        </select>
+                            <option value="-">Other</option>
+                        </select></span>
                     </p>
 
                     <p>
@@ -45,7 +45,7 @@
                     </p>
 
 
-                    <div class="textBox">
+                    <div id="textBox" class="textBox">
                         <br>
                         <br>
                         TEXT
