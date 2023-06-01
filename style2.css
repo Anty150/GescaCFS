@@ -36,7 +36,7 @@
         grid-template-columns: 200px 1fr;
         grid-gap: 16px;
     }
-    /* Styling the form container */
+
     .form {
         display: flex;
         flex-direction: column;
@@ -45,13 +45,11 @@
         text-align: center;
     }
 
-    /* Styling form labels */
     label {
         margin-bottom: 5px;
         font-weight: bold;
     }
 
-    /* Styling form inputs */
     input[type="text"],
     select {
         padding: 5px;
@@ -60,7 +58,6 @@
         border-radius: 3px;
     }
 
-    /* Styling form buttons */
     input[type="button"]{
         padding: 10px 12px;
         margin-right: 0;
@@ -88,7 +85,6 @@
         background-color: #45a049;
     }
 
-    /* Styling the textbox container */
     .textBox {
         padding: 10px;
         margin-top: 40px;
@@ -115,7 +111,6 @@
 
     }
 
-    /* Styling the content */
     .content{
         display: flex;
         flex-direction: row;
