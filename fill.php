@@ -27,8 +27,39 @@
 
                 <p>
                     <span><label for="comboSelect">Select</label></span>
-                    <span><select name="comboSelect" id="comboSelect">
-                        <?php
+                    <span><select name="comboSelect" id="comboSelect" onchange="handleSelectChange()">
+
+                            <script>
+                                function handleSelectChange() {
+                                    let selectedOption = document.getElementById("comboSelect").value;
+                                    let paragraph = document.createElement("p");
+
+                                    paragraph.innerHTML = selectedOption;
+                                    paragraph.setAttribute("id", "1");
+                                    paragraph.style.display = "none";
+                                    document.body.appendChild(paragraph);
+
+// ChatGPT
+                                    var xhr = new XMLHttpRequest();
+                                    xhr.open("POST", "fill.php", true);//nie moze byc ten sam plik
+                                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                                    xhr.onreadystatechange = function () {
+                                        if (xhr.readyState === 4 && xhr.status === 200) {
+                                            var response = xhr.responseText;
+                                            console.log("Wartość odczytana przez skrypt PHP: " + response);
+                                        } else {
+                                            console.log("Wystąpił błąd podczas wywoływania skryptu PHP.");
+                                        }
+                                    };
+                                    xhr.send("value=" + encodeURIComponent(paragraph.innerHTML));
+                                }
+                            </script>
+                            <?php
+                            $value = $_POST['value'];
+                            echo $value;
+                            ?>
+// ChatGPT
+                            <?php
                         $hostName = "localhost";
                         $userName = "root";
                         $password = "";
@@ -36,7 +67,6 @@
                         $query ="SELECT Name FROM `names`";
 
                         $conn = new mysqli($hostName, $userName, $password, $databaseName);
-                        // Check connection
                         if ($conn->connect_error) {
                             die("Connection failed: " . $conn->connect_error);
                         }
@@ -56,13 +86,26 @@
                                 <?php
                             }
                         }
-                        $conn->close();
-                        ?>
 
+                        ?>
                     </select>
                 </p>
 
-                <span><input type="text" name="fill" id="fill"></span>
+                <div class="textBox" id="textBox">
+                    <?php
+
+                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                        if (isset($_POST['mySelect'])) {
+                            $selectedOption = $_POST['comboSelect'];
+                            echo "Wybrana opcja: " . $selectedOption;
+                        }
+                    }
+                    //$queryFieldNameTB = "SELECT `field name` FROM `field names` JOIN names ON `field names`.`Name ID` = names.ID WHERE names.Name = $Name";
+                    //$resultFieldNameTB = $conn->query($queryFieldNameTB);
+
+                    $conn->close();
+                    ?>
+                </div>
                 <input type="submit" name="submitSubmit" id="submitSubmit">
             </form>
         </div>
