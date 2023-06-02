@@ -28,26 +28,40 @@
                 <p>
                     <span><label for="comboSelect">Select</label></span>
                     <span><select name="comboSelect" id="comboSelect">
-                            <option value="A">A</option>
-                            <option value="B">B</option>
-                            <option value="-">Other</option></span>
+                        <?php
+                        $hostName = "localhost";
+                        $userName = "root";
+                        $password = "";
+                        $databaseName = "gescatest";
+                        $query ="SELECT Name FROM `names`";
+
+                        $conn = new mysqli($hostName, $userName, $password, $databaseName);
+                        // Check connection
+                        if ($conn->connect_error) {
+                            die("Connection failed: " . $conn->connect_error);
+                        }
+                        $result = $conn->query($query);
+                        if($result->num_rows> 0){
+                            while($optionData=$result->fetch_assoc()){
+                                $option =$optionData['Name'];
+                                ?>
+                                <?php
+                                if(!empty($courseName) && $courseName== $option){
+                                    ?>
+                                    <option value="<?php echo $option; ?>" selected><?php echo $option; ?> </option>
+                                    <?php
+                                    continue;
+                                }?>
+                                <option value="<?php echo $option; ?>" ><?php echo $option; ?> </option>
+                                <?php
+                            }
+                        }
+                        $conn->close();
+                        ?>
                     </select>
                 </p>
 
-                <p>
-                    <input type="button" name="buttonAdd" id="buttonAdd" value="+">
-                    <input type="button" name="buttonRemove" id="buttonRemove" value="-">
-                </p>
-
-
-                <div class="textBox">
-                    <br>
-                    <br>
-                    TEXT
-                    <br>
-                    <br>
-                    <br>
-                </div>
+                <span><input type="text" name="fill" id="fill"></span>
                 <input type="submit" name="submitSubmit" id="submitSubmit">
             </form>
         </div>
