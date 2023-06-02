@@ -1,7 +1,8 @@
 let i = 0;
-let clickHandler//
+let clickHandler
 let previousClickHandler;
 let previousId = "p0";
+let isSelected = false;
 
 function addToTextBox(){
     let textName = document.getElementById("textName").value;
@@ -9,11 +10,11 @@ function addToTextBox(){
     let comboType = document.getElementById("comboType").value;
     let textBox = document.getElementById("textBox");
 
-    if (textName == ""){
+    if (textName === ""){
         alert("Name cannot be empty.");
         return 0;
     }
-    if (textFieldName == ""){
+    if (textFieldName === ""){
         alert("Field name cannot be empty.");
         return 0;
     }
@@ -29,11 +30,15 @@ function addToTextBox(){
     document.getElementById("textBoxContent").value = textBoxContent;
 }
 function operationsOnRows(id) {
+    isSelected = true;
     buttonRemove.removeEventListener("click", previousClickHandler, false);
     clickHandler = function() {
-        const rowToRemove = document.getElementById(id);
-        rowToRemove.remove();
-        return 0;
+        if(isSelected){
+            const rowToRemove = document.getElementById(id);
+            removeElementFromHiddenInput(rowToRemove);
+            rowToRemove.remove();
+            isSelected = false;
+        }
     };
     buttonRemove.addEventListener("click", clickHandler, false);
     previousClickHandler = clickHandler;
@@ -48,6 +53,21 @@ function operationsOnRows(id) {
     if (p_currentId !== null) {
         p_currentId.style.backgroundColor = "#45a049";
     }
+}
+function removeElementFromHiddenInput(elementToDelete){
+    let textBox = document.getElementById("textBoxContent");
+    let textBoxContent = textBox.value;
+
+    elementToDelete = cutElement(elementToDelete);
+    textBox.setAttribute("value", textBoxContent.replace(elementToDelete,""))
+    console.log(textBoxContent);
+}
+function cutElement(element){
+    let positionToReplaceFirstIndex = element.outerHTML.search(" style");
+    let positionToReplaceLastIndex = element.outerHTML.search(";");
+
+    let newElement = element.outerHTML.replace(element.outerHTML.substring(positionToReplaceFirstIndex, positionToReplaceLastIndex+2), "");
+    return newElement
 }
 
 

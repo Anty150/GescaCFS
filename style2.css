@@ -103,6 +103,7 @@
 
     .textBox p:hover{
         background-color: #45a049;
+        cursor: pointer;
     }
 
     .textBox span{
