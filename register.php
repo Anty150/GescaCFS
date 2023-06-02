@@ -10,7 +10,7 @@
 </head>
 <body>
 <div class="form">
-    <form action="" method="post">
+    <form action="registerScript.php" method="post">
         <label for="username">Username:</label><br>
         <input type="text" id="username" name="username" required><br><br>
 
