@@ -38,9 +38,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $html = $_POST['textBoxContent'];
     $paragraphValues = getParagraphValues($html);
+    $nameValue = $_POST["textName"];
+
+    //Adding new Name to names table
+    $sql = "INSERT INTO `names` (`ID`, `Name`, `User ID`) VALUES (NULL, '$nameValue', '1')";
+    echo $sql;
+    if ($conn->query($sql) === TRUE) {
+        echo "New record created successfully";
+    } else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+
+    $nameID = mysqli_insert_id($conn);
 
     foreach ($paragraphValues as $values) {
-        $sql = "INSERT INTO `field names` (`ID`, `Field Name`, `Type`, `Name ID`, `User ID`) VALUES (NULL, '$values[textFieldName]', '$values[comboType]', '1', '1')";
+
+
+        //Adding new Field names corresponding to the created name
+        $sql = "INSERT INTO `field names` (`ID`, `Field Name`, `Type`, `Name ID`, `User ID`) VALUES (NULL, '$values[textFieldName]', '$values[comboType]','$nameID', '1')";
         echo $sql;
         if ($conn->query($sql) === TRUE) {
             echo "New record created successfully";
