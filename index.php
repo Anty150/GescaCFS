@@ -19,7 +19,7 @@
     </aside>
 </div>
     <div class="form">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. At autem est illo, impedit inventore iusto quia? At debitis natus necessitatibus nisi? Aliquam autem distinctio enim exercitationem, ipsum nam officiis quasi!
+
     </div>
 </div>
 </body>

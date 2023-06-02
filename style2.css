@@ -50,7 +50,7 @@
         font-weight: bold;
     }
 
-    input[type="text"],
+    input[type="text"] input[type="password"],
     select {
         padding: 5px;
         margin-bottom: 10px;
@@ -120,5 +120,8 @@
     }
     .form p span{
         display: block;
+    }
+    #login, #register{
+        float: none;
     }
 }
