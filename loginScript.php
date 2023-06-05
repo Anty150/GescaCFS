@@ -17,7 +17,7 @@
 
     $result = $conn->query("SELECT `ID` FROM `users` WHERE `User_Name` = '$loginUsername';");
     if($result->num_rows == 0) {
-        //Username does not exist
+        $_SESSION['loginFailed'] = true;
     } else {
         $query = "SELECT `Password` FROM `users` WHERE `User_Name` = '$loginUsername';";
         $result = $conn->query($query);
@@ -33,7 +33,7 @@
             echo "Logged";
         }
         else{
-            echo "Password Bad";
+            $_SESSION['loginFailed'] = true;
         }
     }
 

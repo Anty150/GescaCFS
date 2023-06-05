@@ -7,6 +7,7 @@
         unset($_SESSION["username"]);
         unset($_SESSION["valid"]);
         unset($_SESSION["registered"]);
+        unset($_SESSION["loginFailed"]);
     }
 ?>
 <!doctype html>

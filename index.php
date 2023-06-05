@@ -41,6 +41,12 @@
                     $_SESSION['registered'] = false;
                 }
             }
+            if(isset($_SESSION['loginFailed'])){
+                if($_SESSION['loginFailed']){
+                    echo "<p>Username or password is incorrect</p>";
+                    $_SESSION['loginFailed'] = false;
+                }
+            }
             ?>
             <a href="login.php"><input type="button" value="Login"></a>
             <a href="register.php"><input type="button" value="Register"></a>
