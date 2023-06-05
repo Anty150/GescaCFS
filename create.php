@@ -36,7 +36,7 @@
                     </p>
 
                     <p>
-                        <span><label for="textFieldName">Fieldname</label></span>
+                        <span><label for="textFieldName">Field name</label></span>
                         <span><input type="text" name="textFieldName" id="textFieldName"></span>
                     </p>
 
