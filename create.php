@@ -58,8 +58,8 @@
                     <p>
                         <span><label for="comboType">Type</label></span>
                         <span><select name="comboType" id="comboType">
-                            <option value="A">A</option>
-                            <option value="B">B</option>
+                            <option value="text">text</option>
+                            <option value="password">password</option>
                             <option value="-">Other</option>
                         </select></span>
                     </p>
