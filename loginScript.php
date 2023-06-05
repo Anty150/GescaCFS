@@ -15,30 +15,29 @@
     $loginUsername = $_POST['username'];
     $loginPassword = $_POST['password'];
 
-    $result = $conn->query("SELECT `ID` FROM `users` WHERE `User_Name` = '$loginUsername';");
-    if($result->num_rows == 0) {
+    $stmt = $conn->prepare("SELECT `ID`, `Password` FROM `users` WHERE `User_Name` = ?");
+    $stmt->bind_param("s", $loginUsername);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 0) {
         $_SESSION['loginFailed'] = true;
     } else {
-        $query = "SELECT `Password` FROM `users` WHERE `User_Name` = '$loginUsername';";
-        $result = $conn->query($query);
-        $dbPasswordHashed = "";
-        while($row = $result->fetch_assoc())
-        {
-            $dbPasswordHashed = $row['Password'];
-        }
-        if(password_verify($loginPassword, $dbPasswordHashed)){
+        $row = $result->fetch_assoc();
+        $dbPasswordHashed = $row['Password'];
+
+        if (password_verify($loginPassword, $dbPasswordHashed)) {
             $_SESSION['valid'] = true;
             $_SESSION['timeout'] = time();
             $_SESSION['username'] = $loginUsername;
             echo "Logged";
-        }
-        else{
+        } else {
             $_SESSION['loginFailed'] = true;
         }
     }
 
+    $stmt->close();
     $conn->close();
-
 ?>
 
 <script>

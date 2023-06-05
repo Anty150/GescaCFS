@@ -1,5 +1,4 @@
 <?php
-
     session_start();
 
     $passwordMinimumCharacters = 8;
@@ -18,29 +17,34 @@
     $registerUsername = $_POST['username'];
     $registerPassword = $_POST['password'];
 
-    $result = $conn->query("SELECT `ID` FROM `users` WHERE `User_Name` = '$registerUsername';");
-    if($result->num_rows == 0) {
-        if(strlen($registerPassword) < 8){
-            //Password is bad
-        }
-        else{
+    $stmt = $conn->prepare("SELECT `ID` FROM `users` WHERE `User_Name` = ?");
+    $stmt->bind_param("s", $registerUsername);
+    $stmt->execute();
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 0) {
+        if (strlen($registerPassword) < 8) {
+            // Password is bad
+        } else {
             $hashedPassword = hashPassword($registerPassword);
-            $sql = "INSERT INTO `users` (`ID`, `User_Name`, `Password`) VALUES (NULL, '$registerUsername', '$hashedPassword')";
-            if ($conn->query($sql) === TRUE) {
+            $stmt = $conn->prepare("INSERT INTO `users` (`ID`, `User_Name`, `Password`) VALUES (NULL, ?, ?)");
+            $stmt->bind_param("ss", $registerUsername, $hashedPassword);
+
+            if ($stmt->execute()) {
                 $_SESSION['registered'] = true;
                 echo "New record created successfully";
             } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                echo "Error: " . $stmt->error;
             }
         }
     } else {
-        // do other stuff...
+        // Do other stuff...
     }
+
+    $stmt->close();
     $conn->close();
 
-    function hashPassword($password){
-
-        password_hash($password, PASSWORD_DEFAULT);
+    function hashPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);
     }
 ?>

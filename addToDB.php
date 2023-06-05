@@ -1,93 +1,98 @@
 <?php
-    session_start();
+session_start();
 
-    if(!isset($_SESSION['valid'])){
-        header("Location:login.php");
-    }else{
-        $host= "localhost";
-        $username = "root";
-        $password = "";
-        $dbName = "gescatest";
-        function getParagraphValues($html) {
-            $values = array();
+if (!isset($_SESSION['valid'])) {
+    header("Location: login.php");
+    exit();
+} else {
+    $host = "localhost";
+    $username = "root";
+    $password = "";
+    $dbName = "gescatest";
 
-            if (!empty($html)) {
-                $doc = new DOMDocument();
-                libxml_use_internal_errors(true);
-                $doc->loadHTML($html);
-                libxml_use_internal_errors(false);
+    function getParagraphValues($html) {
+        $values = array();
 
-                $paragraphs = $doc->getElementsByTagName('p');
+        if (!empty($html)) {
+            $doc = new DOMDocument();
+            libxml_use_internal_errors(true);
+            $doc->loadHTML($html);
+            libxml_use_internal_errors(false);
 
-                foreach ($paragraphs as $paragraph) {
-                    $spanElements = $paragraph->getElementsByTagName('span');
-                    $textFieldName = $spanElements->item(0)->nodeValue;
-                    $comboType = $spanElements->item(1)->nodeValue;
-                    $values[] = array(
-                        'textFieldName' => $textFieldName,
-                        'comboType' => $comboType
-                    );
-                }
+            $paragraphs = $doc->getElementsByTagName('p');
+
+            foreach ($paragraphs as $paragraph) {
+                $spanElements = $paragraph->getElementsByTagName('span');
+                $textFieldName = $spanElements->item(0)->nodeValue;
+                $comboType = $spanElements->item(1)->nodeValue;
+                $values[] = array(
+                    'textFieldName' => $textFieldName,
+                    'comboType' => $comboType
+                );
             }
-
-            return $values;
         }
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        return $values;
+    }
 
-            $conn = new mysqli($host, $username, $password, $dbName);
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $conn = new mysqli($host, $username, $password, $dbName);
 
-            if ($conn->connect_error) {
-                die('Connect Error (' . $conn->connect_errno . ') ' . $conn->connect_error);
-            }
+        if ($conn->connect_error) {
+            die('Connect Error (' . $conn->connect_errno . ') ' . $conn->connect_error);
+        }
 
-            $html = $_POST['textBoxContent'];
-            $paragraphValues = getParagraphValues($html);
-            $nameValue = $_POST["textName"];
-            $userName = $_SESSION['username'];
-            $userID = "NULL";
+        $html = $_POST['textBoxContent'];
+        $paragraphValues = getParagraphValues($html);
+        $nameValue = $_POST["textName"];
+        $userName = $_SESSION['username'];
+        $userID = null;
 
+        $stmt = $conn->prepare("SELECT ID FROM users WHERE `User_Name` = ?");
+        $stmt->bind_param("s", $userName);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        while ($row = $result->fetch_assoc()) {
+            $userID = $row['ID'];
+        }
+        $stmt->close();
 
-            $sql = "SELECT ID FROM users WHERE `User_Name` = '$userName';";
-            echo $sql;
-            $result = $conn->query($sql);
-            while ($row = $result->fetch_assoc()) {
-                $userID = $row['ID'];
-            }
-
-            //Check if name already exists
-            $sql = "SELECT `name` FROM `names` WHERE `name` = '$nameValue' AND `User ID` = '$userID';";
-            $result = $conn->query($sql);
-            if($result->num_rows > 1){
-                $_SESSION['isDuplicate'] = true;
-            } else{
-                //Adding new Name to names table
-                $sql = "INSERT INTO `names` (`ID`, `Name`, `User ID`) VALUES (NULL, '$nameValue', '$userID')";
-
-                if ($conn->query($sql) === TRUE) {
-                    echo "New record created successfully";
-                } else {
-                    echo "Error: " . $sql . "<br>" . $conn->error;
-                }
-
-                $nameID = mysqli_insert_id($conn);
+        // Check if name already exists
+        $stmt = $conn->prepare("SELECT `name` FROM `names` WHERE `name` = ? AND `User ID` = ?");
+        $stmt->bind_param("si", $nameValue, $userID);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $_SESSION['isDuplicate'] = true;
+        } else {
+            // Adding new Name to names table
+            $stmt = $conn->prepare("INSERT INTO `names` (`ID`, `Name`, `User ID`) VALUES (NULL, ?, ?)");
+            $stmt->bind_param("si", $nameValue, $userID);
+            if ($stmt->execute()) {
+                echo "New record created successfully";
+                $nameID = $stmt->insert_id;
+                $stmt->close();
 
                 foreach ($paragraphValues as $values) {
-                    //Adding new Field names corresponding to the created name
-                    $sql = "INSERT INTO `field names` (`ID`, `Field Name`, `Type`, `Name ID`, `User ID`) VALUES (NULL, '$values[textFieldName]', '$values[comboType]','$nameID', '$userID')";
-                    if ($conn->query($sql) === TRUE) {
+                    // Adding new Field names corresponding to the created name
+                    $stmt = $conn->prepare("INSERT INTO `field names` (`ID`, `Field Name`, `Type`, `Name ID`, `User ID`) VALUES (NULL, ?, ?, ?, ?)");
+                    $stmt->bind_param("ssii", $values['textFieldName'], $values['comboType'], $nameID, $userID);
+                    if ($stmt->execute()) {
                         echo "New record created successfully";
                     } else {
-                        echo "Error: " . $sql . "<br>" . $conn->error;
+                        echo "Error: " . $stmt->error;
                     }
                     echo "textFieldName: " . $values['textFieldName'] . "<br>";
                     echo "comboType: " . $values['comboType'] . "<br>";
                     echo "<br>";
+                    $stmt->close();
                 }
+            } else {
+                echo "Error: " . $stmt->error;
             }
-            $conn->close();
         }
+        $conn->close();
     }
-
+}
 ?>
 <body onload="history.go(-1);">
