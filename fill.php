@@ -45,6 +45,7 @@ if(!isset($_SESSION['valid'])){
                     <span><label for="comboSelect">Select</label></span>
                     <span>
                         <select name="comboSelect" id="comboSelect">
+                            <option value="None">None</option>
                             <?php
                             global $conn;
 
@@ -59,15 +60,15 @@ if(!isset($_SESSION['valid'])){
                                 die("Connection failed: " . $conn->connect_error);
                             }
 
-                            $query = "SELECT users.ID FROM users INNER JOIN names ON users.ID = names.`User ID` WHERE users.User_Name = '".$_SESSION["username"]."';";
+                            $query = "SELECT users.ID FROM users INNER JOIN names ON users.ID = names.`User ID` WHERE users.User_Name = '".$_SESSION["username"]."';";                            $result = $conn->query($query);
                             $result = $conn->query($query);
                             while ($row = $result->fetch_assoc()) {
                                 $userID = $row['ID'];
                                 echo $userID;
                             }
 
-                            $query ="SELECT Name FROM `names` WHERE `User ID` = '$userID'";
-
+                            $query ="SELECT Name FROM `names` WHERE `User ID` = '$userID'
+";
 
                             $result = $conn->query($query);
                             if($result->num_rows> 0){
@@ -91,6 +92,9 @@ if(!isset($_SESSION['valid'])){
                 </p>
 
                 <div class="textBox" id="textBox">
+                    <p>
+
+                    </p>
                     <?php
                     //echo $queryFieldNameTB
                     //$resultFieldNameTB = $conn->query($queryFieldNameTB);
@@ -112,7 +116,18 @@ if(!isset($_SESSION['valid'])){
                 url: 'getSelectedItemFromFill.php',
                 data: { selectedItem: selectedItem },
                 success: function(response) {
-                    $('#textBox').text(response);
+
+                    let spanElements = '';
+                    let resultArray = response.split('|');
+
+                    for (let i = 0; i < resultArray.length -1; i++) {
+                        spanElements += '<p>' + resultArray[i];
+                        console.log(resultArray[i]);
+                        spanElements += '<span><input type="text" name="" id=""></span>' + '</p>'
+                        console.log(spanElements + "/n");
+                    }
+
+                    $('#textBox').html(spanElements);
                 }
             });
         });
