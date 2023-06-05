@@ -13,6 +13,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="style2.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -32,42 +33,30 @@
                     <span><label for="textName">Fill Name</label></span>
                     <span><input type="text" name="textFillName" id="textFillName"></span>
                 </p>
-
+                <div id="selectedItem"></div>
                 <p>
                     <span><label for="comboSelect">Select</label></span>
-                    <span><select name="comboSelect" id="comboSelect" onchange="handleSelectChange()">
+                    <span><select name="comboSelect" id="comboSelect">
+                      <script>
+                        $(document).ready(function() {
+                            // Nasłuchiwanie zmiany wartości listy
+                            $('#comboSelect').on('change', function() {
+                                var selectedItem = $(this).val();
 
-                            <script>
-                                function handleSelectChange() {
-                                    let selectedOption = document.getElementById("comboSelect").value;
-                                    let paragraph = document.createElement("p");
-
-                                    paragraph.innerHTML = selectedOption;
-                                    paragraph.setAttribute("id", "1");
-                                    paragraph.style.display = "none";
-                                    document.body.appendChild(paragraph);
-
-// ChatGPT
-                                    var xhr = new XMLHttpRequest();
-                                    xhr.open("POST", "fill.php", true);//nie moze byc ten sam plik
-                                    xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                                    xhr.onreadystatechange = function () {
-                                        if (xhr.readyState === 4 && xhr.status === 200) {
-                                            var response = xhr.responseText;
-                                            console.log("Wartość odczytana przez skrypt PHP: " + response);
-                                        } else {
-                                            console.log("Wystąpił błąd podczas wywoływania skryptu PHP.");
-                                        }
-                                    };
-                                    xhr.send("value=" + encodeURIComponent(paragraph.innerHTML));
-                                }
-                            </script>
-                            <?php
-                            $value = $_POST['value'];
-                            echo $value;
-                            ?>
-// ChatGPT
-                            <?php
+                                // Wysyłanie zapytania AJAX do serwera PHP
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'getSelectedItemFromFill.php',
+                                    data: { selectedItem: selectedItem },
+                                    success: function(response) {
+                                        // Aktualizowanie wyświetlanego elementu bez odświeżania strony
+                                        $('#selectedItem').text(response);
+                                    }
+                                });
+                            });
+                        });
+                      </script>
+                      <?php
                         $hostName = "localhost";
                         $userName = "root";
                         $password = "";
@@ -94,7 +83,6 @@
                                 <?php
                             }
                         }
-
                         ?>
                     </select>
                 </p>
@@ -102,16 +90,7 @@
                 <div class="textBox" id="textBox">
                     <?php
 
-                    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                        if (isset($_POST['mySelect'])) {
-                            $selectedOption = $_POST['comboSelect'];
-                            echo "Wybrana opcja: " . $selectedOption;
-                        }
-                    }
-                    //$queryFieldNameTB = "SELECT `field name` FROM `field names` JOIN names ON `field names`.`Name ID` = names.ID WHERE names.Name = $Name";
-                    //$resultFieldNameTB = $conn->query($queryFieldNameTB);
 
-                    $conn->close();
                     ?>
                 </div>
                 <input type="submit" name="submitSubmit" id="submitSubmit">
