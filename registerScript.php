@@ -27,6 +27,7 @@
             $hashedPassword = hashPassword($registerPassword);
             $sql = "INSERT INTO `users` (`ID`, `User Name`, `Password`) VALUES (NULL, '$registerUsername', '$hashedPassword')";
             if ($conn->query($sql) === TRUE) {
+                $_SESSION['registered'] = true;
                 echo "New record created successfully";
             } else {
                 echo "Error: " . $sql . "<br>" . $conn->error;
@@ -43,5 +44,8 @@
         return password_hash($password, PASSWORD_DEFAULT);
     }
 ?>
-<body onload="history.go(-1);">
-
+<script>
+    window.onload = function() {
+        window.location.href = "index.php";
+    }
+</script>

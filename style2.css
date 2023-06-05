@@ -69,6 +69,17 @@
         cursor: pointer;
         width: 45%;
     }
+    p input[type="button"]{
+        padding: 5px 5px;
+        margin-right: 0;
+        margin-left: 5px;
+        border: none;
+        border-radius: 3px;
+        background-color: #4caf50;
+        color: #fff;
+        cursor: pointer;
+        width: 30%;
+    }
     input[type="submit"]{
         padding: 10px 12px;
         margin-right: 0;
@@ -123,5 +134,8 @@
     }
     #login, #register{
         float: none;
+    }
+    .form_footer{
+        font-size: small;
     }
 }

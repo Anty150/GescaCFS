@@ -40,4 +40,9 @@
     $conn->close();
 
 ?>
-<body onload="history.go(-1);">
+
+<script>
+    window.onload = function() {
+        window.location.href = "index.php";
+    }
+</script>

@@ -19,11 +19,18 @@
 <div class="wrapper">
     <aside>
         <ul>
-            <li><a href="see.php">See</a></li>
+            <?php
+            if(isset($_SESSION['valid'])){
+                echo "<p>Welcome ".$_SESSION["username"]."</p>";
+            }else{
+                echo "<p>Not logged in</p>";
+            }
+            ?>
+            <li><a href="index.php">Main Page</a></li>
             <li><a href="create.php">Create</a></li>
             <li><a href="fill.php">Fill</a></li>
             <li><a href="see.php">See</a></li>
-            <li><a href="see.php">See</a></li>
+            <li><a href="logout.php">Logout</a></li>
         </ul>
     </aside>
     <main>
@@ -41,7 +48,7 @@
                         $(document).ready(function() {
                             // Nasłuchiwanie zmiany wartości listy
                             $('#comboSelect').on('change', function() {
-                                var selectedItem = $(this).val();
+                                let selectedItem = $(this).val();
 
                                 // Wysyłanie zapytania AJAX do serwera PHP
                                 $.ajax({

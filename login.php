@@ -12,15 +12,25 @@
     <link rel="stylesheet" href="style2.css">
 </head>
 <body>
-<div class="form">
-    <form action="loginScript.php" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
+    <div class="form">
+        <form action="loginScript.php" method="post">
+            <p>
+                <span><label for="username">Username</label></span>
+                <span><input type="text" id="username" name="username" required></span>
+            </p>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
+            <p>
+                <span><label for="password">Password</label></span>
+                <span><input type="password" id="password" name="password" required></span>
+            </p>
 
-        <input type="submit" value="Login" id="login" name="login">
-</div>
+            <p>
+                <span><input type="submit" value="Login" id="login" name="login"></span>
+            </p>
+            <p class="form_footer">
+                Don't have an account?
+                <input type="button" onclick="location.href='register.php'" value="Register">
+            </p>
+    </div>
 </body>
 </html>

@@ -1,9 +1,6 @@
 <!doctype html>
 <?php
     session_start();
-    if(!isset($_SESSION['valid'])){
-        header("Location:login.php");
-    }
 ?>
 <html lang="en">
 <head>
@@ -17,18 +14,27 @@
 <body>
 <div class="form">
     <form action="registerScript.php" method="post">
-        <label for="username">Username:</label><br>
-        <input type="text" id="username" name="username" required><br><br>
+        <p>
+        <span><label for="username">Username</label></span>
+        <span><input type="text" id="username" name="username" required></span>
+        </p>
 
-        <label for="password">Password:</label><br>
-        <input type="password" id="password" name="password" required><br><br>
-
+        <p>
+        <span><label for="password">Password</label></span>
+        <span><input type="password" id="password" name="password" required></span>
+        </p>
         <!--
         <label for="email">Email:</label>
         <input type="email" id="email" name="email" required><br><br>
         -->
+        <p>
+        <span><input type="submit" value="Register" id="register" name="register"></span>
+        </p>
 
-        <input type="submit" value="Register" id="register" name="register">
+        <p class="form_footer">
+            Have an account?
+            <input type="button" onclick="location.href='login.php'" value="Login">
+        </p>
     </form>
 </div>
 </body>

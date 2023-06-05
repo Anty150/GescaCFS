@@ -1,11 +1,15 @@
-<!doctype html>
 <?php
     session_start();
 
     if(!isset($_SESSION['valid'])){
         header("Location:login.php");
+    }else{
+        unset($_SESSION["username"]);
+        unset($_SESSION["valid"]);
+        unset($_SESSION["registered"]);
     }
 ?>
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -30,11 +34,17 @@
             <li><a href="create.php">Create</a></li>
             <li><a href="fill.php">Fill</a></li>
             <li><a href="see.php">See</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <?php
+            if(isset($_SESSION['valid'])){
+                echo "<li><a href="."logout.php".">Logout</a></li>";
+            }
+            ?>
         </ul>
     </aside>
     <main>
-        <p>Lorem ipsum</p>
+        <p>Logged out!</p>
+        <a href="login.php"><input type="button" value="Login"></a>
+        <a href="register.php"><input type="button" value="Register"></a>
     </main>
 </div>
 </body>

@@ -12,20 +12,39 @@
     <link rel="stylesheet" href="style2.css">
 </head>
 <body>
-<div class="wrapper">
-    <aside>
-        <ul>
-            <li><a href="see.php">See</a></li>
-            <li><a href="create.php">Create</a></li>
-            <li><a href="fill.php">Fill</a></li>
-            <li><a href="see.php">See</a></li>
-            <li><a href="see.php">See</a></li>
-        </ul>
-    </aside>
-</div>
-    <main>
-
-    </main>
-</div>
+    <div class="wrapper">
+        <aside>
+            <ul>
+                <?php
+                    if(isset($_SESSION['valid'])){
+                        echo "<p>Welcome ".$_SESSION["username"]."</p>";
+                    }else{
+                        echo "<p>Not logged in</p>";
+                    }
+                ?>
+                <li><a href="index.php">Main Page</a></li>
+                <li><a href="create.php">Create</a></li>
+                <li><a href="fill.php">Fill</a></li>
+                <li><a href="see.php">See</a></li>
+                <?php
+                if(isset($_SESSION['valid'])){
+                    echo "<li><a href="."logout.php".">Logout</a></li>";
+                }
+                ?>
+            </ul>
+        </aside>
+        <main>
+            <?php
+            if(isset($_SESSION['registered'])){
+                if($_SESSION['registered']){
+                    echo "<p>Succesfuly registered you can now log in</p>";
+                    $_SESSION['registered'] = false;
+                }
+            }
+            ?>
+            <a href="login.php"><input type="button" value="Login"></a>
+            <a href="register.php"><input type="button" value="Register"></a>
+        </main>
+    </div>
 </body>
 </html>
