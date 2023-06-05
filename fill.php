@@ -91,11 +91,7 @@ if(!isset($_SESSION['valid'])){
                     </span>
                 </p>
 
-                <div class="textBox" id="textBox">
-                    <p>
-
-                    </p>
-                </div>
+                <div class="textBox" id="textBox"></div>
                 <input type="submit" name="submitSubmit" id="submitSubmit">
             </form>
         </div>

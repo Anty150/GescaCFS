@@ -58,9 +58,11 @@
                     <p>
                         <span><label for="comboType">Type</label></span>
                         <span><select name="comboType" id="comboType">
-                            <option value="text">text</option>
-                            <option value="password">password</option>
-                            <option value="-">Other</option>
+                            <option value="text">Text</option>
+                            <option value="password">Password</option>
+                            <option value="date">Date</option>
+                            <option value="checkbox">Checkbox</option>
+                            <option value="radio">Radio</option>
                         </select></span>
                     </p>
 
