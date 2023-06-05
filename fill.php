@@ -95,10 +95,6 @@ if(!isset($_SESSION['valid'])){
                     <p>
 
                     </p>
-                    <?php
-                    //echo $queryFieldNameTB
-                    //$resultFieldNameTB = $conn->query($queryFieldNameTB);
-                    ?>
                 </div>
                 <input type="submit" name="submitSubmit" id="submitSubmit">
             </form>
@@ -116,15 +112,21 @@ if(!isset($_SESSION['valid'])){
                 url: 'getSelectedItemFromFill.php',
                 data: { selectedItem: selectedItem },
                 success: function(response) {
+                    let spanElements = ''; // Initialize spanElements as an empty string
 
-                    let spanElements = '';
-                    let resultArray = response.split('|');
+                    let responses = response.split('#');
+                    let fieldNames = responses[0];
+                    let names = responses[1];
 
-                    for (let i = 0; i < resultArray.length -1; i++) {
-                        spanElements += '<p>' + resultArray[i];
-                        console.log(resultArray[i]);
-                        spanElements += '<span><input type="text" name="" id=""></span>' + '</p>'
-                        console.log(spanElements + "/n");
+                    let fieldNamesArray = fieldNames.split('|');
+                    let typeArray = names.split('|');
+
+                    console.log(fieldNamesArray);
+                    console.log(typeArray);
+
+                    for (let i = 0; i < fieldNamesArray.length; i++) {
+                        spanElements += '<p><span>' + fieldNamesArray[i];
+                        spanElements += '</span><span><input type="' + typeArray[i] + '" name="" id=""></span></p>';
                     }
 
                     $('#textBox').html(spanElements);
@@ -133,6 +135,7 @@ if(!isset($_SESSION['valid'])){
         });
     });
 </script>
+
 
 </body>
 </html>
