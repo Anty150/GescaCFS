@@ -15,11 +15,11 @@
     $loginUsername = $_POST['username'];
     $loginPassword = $_POST['password'];
 
-    $result = $conn->query("SELECT `ID` FROM `users` WHERE `User Name` = '$loginUsername';");
+    $result = $conn->query("SELECT `ID` FROM `users` WHERE `User_Name` = '$loginUsername';");
     if($result->num_rows == 0) {
         //Username does not exist
     } else {
-        $query = "SELECT `Password` FROM `users` WHERE `User Name` = '$loginUsername';";
+        $query = "SELECT `Password` FROM `users` WHERE `User_Name` = '$loginUsername';";
         $result = $conn->query($query);
         $dbPasswordHashed = "";
         while($row = $result->fetch_assoc())

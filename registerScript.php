@@ -18,14 +18,14 @@
     $registerUsername = $_POST['username'];
     $registerPassword = $_POST['password'];
 
-    $result = $conn->query("SELECT `ID` FROM `users` WHERE `User Name` = '$registerUsername';");
+    $result = $conn->query("SELECT `ID` FROM `users` WHERE `User_Name` = '$registerUsername';");
     if($result->num_rows == 0) {
         if(strlen($registerPassword) < 8){
             //Password is bad
         }
         else{
             $hashedPassword = hashPassword($registerPassword);
-            $sql = "INSERT INTO `users` (`ID`, `User Name`, `Password`) VALUES (NULL, '$registerUsername', '$hashedPassword')";
+            $sql = "INSERT INTO `users` (`ID`, `User_Name`, `Password`) VALUES (NULL, '$registerUsername', '$hashedPassword')";
             if ($conn->query($sql) === TRUE) {
                 $_SESSION['registered'] = true;
                 echo "New record created successfully";
