@@ -2,7 +2,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['valid'])){
-    //header("Location:login.php");
+    header("Location:login.php");
 }
 ?>
 <html lang="en">
@@ -52,12 +52,23 @@ if(!isset($_SESSION['valid'])){
                             $userName = "root";
                             $password = "";
                             $databaseName = "gescatest";
-                            $query ="SELECT Name FROM `names`";
+                            $userID = "NULL";
 
                             $conn = new mysqli($hostName, $userName, $password, $databaseName);
                             if ($conn->connect_error) {
                                 die("Connection failed: " . $conn->connect_error);
                             }
+
+                            $query = "SELECT users.ID FROM users INNER JOIN names ON users.ID = names.`User ID` WHERE users.User_Name = '".$_SESSION["username"]."';";
+                            $result = $conn->query($query);
+                            while ($row = $result->fetch_assoc()) {
+                                $userID = $row['ID'];
+                                echo $userID;
+                            }
+
+                            $query ="SELECT Name FROM `names` WHERE `User ID` = '$userID'";
+
+
                             $result = $conn->query($query);
                             if($result->num_rows> 0){
                                 while($optionData=$result->fetch_assoc()){

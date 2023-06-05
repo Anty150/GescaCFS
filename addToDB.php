@@ -52,7 +52,6 @@
             $result = $conn->query($sql);
             while ($row = $result->fetch_assoc()) {
                 $userID = $row['ID'];
-                echo $userID;
             }
 
             //Adding new Name to names table
@@ -67,11 +66,8 @@
             $nameID = mysqli_insert_id($conn);
 
             foreach ($paragraphValues as $values) {
-
-
                 //Adding new Field names corresponding to the created name
                 $sql = "INSERT INTO `field names` (`ID`, `Field Name`, `Type`, `Name ID`, `User ID`) VALUES (NULL, '$values[textFieldName]', '$values[comboType]','$nameID', '$userID')";
-                echo $sql;
                 if ($conn->query($sql) === TRUE) {
                     echo "New record created successfully";
                 } else {
