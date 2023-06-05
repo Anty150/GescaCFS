@@ -47,6 +47,7 @@
             $userName = $_SESSION['username'];
             $userID = "NULL";
 
+
             $sql = "SELECT ID FROM users WHERE `User_Name` = '$userName';";
             echo $sql;
             $result = $conn->query($sql);
@@ -54,28 +55,35 @@
                 $userID = $row['ID'];
             }
 
-            //Adding new Name to names table
-            $sql = "INSERT INTO `names` (`ID`, `Name`, `User ID`) VALUES (NULL, '$nameValue', '$userID')";
+            //Check if name already exists
+            $sql = "SELECT `name` FROM `names` WHERE `name` = '$nameValue' AND `User ID` = '$userID';";
+            $result = $conn->query($sql);
+            if($result->num_rows > 1){
+                $_SESSION['isDuplicate'] = true;
+            } else{
+                //Adding new Name to names table
+                $sql = "INSERT INTO `names` (`ID`, `Name`, `User ID`) VALUES (NULL, '$nameValue', '$userID')";
 
-            if ($conn->query($sql) === TRUE) {
-                echo "New record created successfully";
-            } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
-            }
-
-            $nameID = mysqli_insert_id($conn);
-
-            foreach ($paragraphValues as $values) {
-                //Adding new Field names corresponding to the created name
-                $sql = "INSERT INTO `field names` (`ID`, `Field Name`, `Type`, `Name ID`, `User ID`) VALUES (NULL, '$values[textFieldName]', '$values[comboType]','$nameID', '$userID')";
                 if ($conn->query($sql) === TRUE) {
                     echo "New record created successfully";
                 } else {
                     echo "Error: " . $sql . "<br>" . $conn->error;
                 }
-                echo "textFieldName: " . $values['textFieldName'] . "<br>";
-                echo "comboType: " . $values['comboType'] . "<br>";
-                echo "<br>";
+
+                $nameID = mysqli_insert_id($conn);
+
+                foreach ($paragraphValues as $values) {
+                    //Adding new Field names corresponding to the created name
+                    $sql = "INSERT INTO `field names` (`ID`, `Field Name`, `Type`, `Name ID`, `User ID`) VALUES (NULL, '$values[textFieldName]', '$values[comboType]','$nameID', '$userID')";
+                    if ($conn->query($sql) === TRUE) {
+                        echo "New record created successfully";
+                    } else {
+                        echo "Error: " . $sql . "<br>" . $conn->error;
+                    }
+                    echo "textFieldName: " . $values['textFieldName'] . "<br>";
+                    echo "comboType: " . $values['comboType'] . "<br>";
+                    echo "<br>";
+                }
             }
             $conn->close();
         }

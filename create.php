@@ -35,6 +35,14 @@
             </ul>
         </aside>
         <main>
+            <?php
+                if(isset($_SESSION['isDuplicate'])){
+                    if ($_SESSION['isDuplicate']){
+                        echo "<p>Name already exists!</p>";
+                        $_SESSION['isDuplicate'] = false;
+                    }
+                }
+            ?>
             <div class="form">
                 <form action="addToDB.php" method="POST">
                     <p>
