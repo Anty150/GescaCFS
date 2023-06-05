@@ -16,25 +16,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userID = "NULL";
 
     $sql = "SELECT ID FROM users WHERE `User_Name` = '$userName';";
-    echo $sql;
     $result = $conn->query($sql);
     while ($row = $result->fetch_assoc()) {
         $userID = $row['ID'];
     }
 
     $queryFieldNameTB = "SELECT `field name` FROM `field names` JOIN names ON `field names`.`Name ID` = names.ID WHERE names.Name = '$selectedItem' AND `field names`.`User ID` = '$userID';";
-    echo  $queryFieldNameTB;
     $result = $conn->query($queryFieldNameTB);
 
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $fieldName = $row['field name'];
-            echo $fieldName;
+            $fieldNames[] = $row['field name'];
         }
+        $response1 = implode('|', $fieldNames);
+    }
+    else {
+        $response1 = "No field names found.";
+    }
+
+    $queryTypesTB = "SELECT `type` FROM `field names` JOIN names ON `field names`.`Name ID` = names.ID WHERE names.Name = '$selectedItem' AND `field names`.`User ID` = '$userID';";
+    $resultAllNames = $conn->query($queryTypesTB);
+
+    if ($resultAllNames->num_rows > 0) {
+        $names = array();
+        while ($row = $resultAllNames->fetch_assoc()) {
+            $names[] = $row['type'];
+        }
+        $response2 = implode('|', $names);
     } else {
-        echo "No field name found.";
+        $response2 = "No names found.";
     }
 
     $conn->close();
+
+    echo $response1 . "#" . $response2;
 }
 ?>

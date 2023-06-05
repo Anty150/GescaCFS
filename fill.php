@@ -121,9 +121,6 @@ if(!isset($_SESSION['valid'])){
                     let fieldNamesArray = fieldNames.split('|');
                     let typeArray = names.split('|');
 
-                    console.log(fieldNamesArray);
-                    console.log(typeArray);
-
                     for (let i = 0; i < fieldNamesArray.length; i++) {
                         spanElements += '<p><span>' + fieldNamesArray[i];
                         spanElements += '</span><span><input type="' + typeArray[i] + '" name="" id=""></span></p>';
