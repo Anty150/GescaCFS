@@ -1,4 +1,11 @@
 <!doctype html>
+<?php
+    session_start();
+
+    if(!isset($_SESSION['valid'])){
+        header("Location:login.php");
+    }
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,8 +20,10 @@
     <div class="wrapper">
         <aside>
             <ul>
+                <li><a href="see.php">See</a></li>
                 <li><a href="create.php">Create</a></li>
                 <li><a href="fill.php">Fill</a></li>
+                <li><a href="see.php">See</a></li>
                 <li><a href="see.php">See</a></li>
             </ul>
         </aside>

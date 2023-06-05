@@ -1,4 +1,6 @@
 <?php
+    session_start();
+
     $host= "localhost";
     $username = "root";
     $password = "";
@@ -25,6 +27,9 @@
             $dbPasswordHashed = $row['Password'];
         }
         if(password_verify($loginPassword, $dbPasswordHashed)){
+            $_SESSION['valid'] = true;
+            $_SESSION['timeout'] = time();
+            $_SESSION['username'] = $loginUsername;
             echo "Logged";
         }
         else{

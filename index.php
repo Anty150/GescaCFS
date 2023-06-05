@@ -1,4 +1,7 @@
 <!doctype html>
+<?php
+    session_start();
+?>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -12,15 +15,17 @@
 <div class="wrapper">
     <aside>
         <ul>
+            <li><a href="see.php">See</a></li>
             <li><a href="create.php">Create</a></li>
             <li><a href="fill.php">Fill</a></li>
+            <li><a href="see.php">See</a></li>
             <li><a href="see.php">See</a></li>
         </ul>
     </aside>
 </div>
-    <div class="form">
+    <main>
 
-    </div>
+    </main>
 </div>
 </body>
 </html>

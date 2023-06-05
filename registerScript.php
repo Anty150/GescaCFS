@@ -1,4 +1,7 @@
 <?php
+
+    session_start();
+
     $passwordMinimumCharacters = 8;
 
     $host= "localhost";
