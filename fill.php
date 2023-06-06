@@ -103,80 +103,75 @@ if(!isset($_SESSION['valid'])){
 <script>
     $(document).ready(function() {
         $('#comboSelect').on('change', function() {
-            console.log($(this).val())
-            if($(this).val() !== "None"){
-                let selectedItem = $(this).val();
-                //$("#submitSubmit").prop('enabled', true);
+            let selectedItem = $(this).val();
+            $("#comboSelect option[value='None']").remove(); //Unsure if trying to delete nonexistent element affects something
 
-                //console.log(selectedItem);
-                $.ajax({
-                    type: 'POST',
-                    url: 'getSelectedItemFromFill.php',
-                    data: { selectedItem: selectedItem },
-                    success: function(response) {
-                        let spanElements = ''; // Initialize spanElements as an empty string
+            $.ajax({
+                type: 'POST',
+                url: 'getSelectedItemFromFill.php',
+                data: { selectedItem: selectedItem },
+                success: function(response) {
+                    let spanElements = ''; // Initialize spanElements as an empty string
 
-                        let responses = response.split('#');
-                        let fieldNames = responses[0];
-                        let names = responses[1];
+                    let responses = response.split('#');
+                    let fieldNames = responses[0];
+                    let names = responses[1];
 
-                        let fieldNamesArray = fieldNames.split('|');
-                        let typeArray = names.split('|');
+                    let fieldNamesArray = fieldNames.split('|');
+                    let typeArray = names.split('|');
 
-                        for (let i = 0; i < fieldNamesArray.length; i++) {
-                            let inputId = 'input' + i;
-                            spanElements += '<p><span>' + fieldNamesArray[i];
-                            spanElements += '</span><span><input type="' + typeArray[i] + '" id="' + inputId + '"></span></p>';
-                        }
-
-                        $('#textBox').html(spanElements);
-
-                        // Event handler for export button
-                        $('#submitSubmit').on('click', function() {
-                            let documentName = $('#textFillName').val(); // Get the text of the second paragraph
-
-                            let inputs = $('input[type!="button"], textarea'); // Select all input and textarea elements
-
-                            let docContent = '';
-                            inputs.each(function() {
-                                let value = "";
-                                let label = $(this).closest('p').find('span:first-child').text();
-                                if($(this).is(':checkbox')){
-                                    if($(this).is(":checked")){
-                                        value = "True";
-                                    }else{
-                                        value = "False";
-                                    }
-                                }else{
-                                    value = $(this).val();
-                                }
-
-                                if(label !== ""){
-                                    docContent += label + ': ' + value + '\n';
-                                }
-                            });
-
-                            $.ajax({
-                                type: 'POST',
-                                url: 'saveDocumentToDatabase.php',
-                                data: {
-                                    documentName: documentName,
-                                    documentContent: docContent
-                                },
-                                success: function(response){
-                                    alert('Document saved to database.');
-                                },
-                                error: function(xhr, status, error) {
-                                    alert('An error occurred while saving the document: ' + error);
-                                }
-                            });
-                        });
+                    for (let i = 0; i < fieldNamesArray.length; i++) {
+                        let inputId = 'input' + i;
+                        spanElements += '<p><span>' + fieldNamesArray[i];
+                        spanElements += '</span><span><input type="' + typeArray[i] + '" id="' + inputId + '"></span></p>';
                     }
-                });
-            }else{
-                $('#textBox').html("");
-                //$("#submitSubmit").prop('disabled', true);
-            }
+
+                    $('#textBox').html(spanElements);
+
+                    // Event handler for export button
+                    $('#submitSubmit').on('click', function() {
+                        let documentName = $('#textFillName').val(); // Get the text of the second paragraph
+                        if(documentName === ""){
+                            documentName = "Unnamed document";
+                        }
+                        let inputs = $('input[type!="button"], textarea'); // Select all input and textarea elements
+
+                        let docContent = '';
+                        inputs.each(function() {
+                            let value = "";
+                            let label = $(this).closest('p').find('span:first-child').text();
+                            if($(this).is(':checkbox')){
+                                if($(this).is(":checked")){
+                                    value = "True";
+                                }else{
+                                    value = "False";
+                                }
+                            }else{
+                                value = $(this).val();
+                            }
+
+                            if(label !== ""){
+                                docContent += label + ': ' + value + '\n';
+                            }
+                        });
+
+                        $.ajax({
+                            type: 'POST',
+                            url: 'saveDocumentToDatabase.php',
+                            data: {
+                                documentName: documentName,
+                                documentContent: docContent
+                            },
+                            success: function(response){
+                                alert('Document saved to database.');
+                            },
+                            error: function(xhr, status, error) {
+                                alert('An error occurred while saving the document: ' + error);
+                            }
+                        });
+                    });
+                }
+            });
 
         });
     });

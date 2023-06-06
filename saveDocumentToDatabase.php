@@ -32,6 +32,24 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
+$sql = "SELECT fills.Name FROM fills WHERE fills.Name = ? AND fills.User_ID = ?";
+$stmt = $conn->prepare($sql);
+
+$stmt->bind_param("ss", $documentName, $userID);
+
+$stmt->execute();
+
+$result = $stmt->get_result();
+$namesCount = 0;
+
+while ($row = $result->fetch_assoc()) {
+    $namesCount++;
+}
+$stmt->close();
+if ($namesCount > 0) {
+    $documentName .= '_' . $namesCount;
+}
+
 // Prepare the SQL statement to insert the document details into the database
 $sql = "INSERT INTO fills (name, content, time_created, User_ID) VALUES (?, ?, CURRENT_TIMESTAMP, ?)";
 
