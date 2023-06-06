@@ -124,8 +124,9 @@ if(!isset($_SESSION['valid'])){
                         let typeArray = names.split('|');
 
                         for (let i = 0; i < fieldNamesArray.length; i++) {
+                            let inputId = 'input' + i;
                             spanElements += '<p><span>' + fieldNamesArray[i];
-                            spanElements += '</span><span><input type="' + typeArray[i] + '" name="" id=""></span></p>';
+                            spanElements += '</span><span><input type="' + typeArray[i] + '" id="' + inputId + '"></span></p>';
                         }
 
                         $('#textBox').html(spanElements);
