@@ -36,7 +36,7 @@ if(!isset($_SESSION['valid'])){
     </aside>
     <main>
         <div class="form">
-            <form action="fill.php" method="POST">
+            <form action="" method="POST">
                 <p>
                     <span><label for="textFillName">Fill Name</label></span>
                     <span><input type="text" name="textFillName" id="textFillName"></span>
@@ -103,9 +103,12 @@ if(!isset($_SESSION['valid'])){
 <script>
     $(document).ready(function() {
         $('#comboSelect').on('change', function() {
-            if($(this).val() != "None"){
+            console.log($(this).val())
+            if($(this).val() !== "None"){
                 let selectedItem = $(this).val();
+                //$("#submitSubmit").prop('enabled', true);
 
+                //console.log(selectedItem);
                 $.ajax({
                     type: 'POST',
                     url: 'getSelectedItemFromFill.php',
@@ -129,26 +132,37 @@ if(!isset($_SESSION['valid'])){
 
                         // Event handler for export button
                         $('#submitSubmit').on('click', function() {
-                            let secondParagraph = $('#textFillName').val(); // Get the text of the second paragraph
+                            let documentName = $('#textFillName').val(); // Get the text of the second paragraph
 
                             let inputs = $('input[type!="button"], textarea'); // Select all input and textarea elements
 
                             let docContent = '';
                             inputs.each(function() {
+                                let value = "";
                                 let label = $(this).closest('p').find('span:first-child').text();
-                                let value = $(this).val();
-                                if(label != ""){
+                                if($(this).is(':checkbox')){
+                                    if($(this).is(":checked")){
+                                        value = "True";
+                                    }else{
+                                        value = "False";
+                                    }
+                                }else{
+                                    value = $(this).val();
+                                }
+
+                                if(label !== ""){
                                     docContent += label + ': ' + value + '\n';
                                 }
                             });
+
                             $.ajax({
                                 type: 'POST',
                                 url: 'saveDocumentToDatabase.php',
                                 data: {
-                                    documentName: secondParagraph,
+                                    documentName: documentName,
                                     documentContent: docContent
                                 },
-                                success: function(response) {
+                                success: function(response){
                                     alert('Document saved to database.');
                                 },
                                 error: function(xhr, status, error) {
@@ -159,15 +173,12 @@ if(!isset($_SESSION['valid'])){
                     }
                 });
             }else{
-
+                $('#textBox').html("");
+                //$("#submitSubmit").prop('disabled', true);
             }
 
         });
     });
 </script>
-
-
-
-
 </body>
 </html>
