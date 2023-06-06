@@ -18,14 +18,17 @@
                 <?php
                     if(isset($_SESSION['valid'])){
                         echo "<p>Welcome ".$_SESSION["username"]."</p>";
+                        $isHidden = false;
                     }else{
                         echo "<p>Not logged in</p>";
+                        $isHidden = true;
                     }
                 ?>
                 <li><a href="index.php">Main Page</a></li>
                 <li><a href="create.php">Create</a></li>
                 <li><a href="fill.php">Fill</a></li>
                 <li><a href="see.php">See</a></li>
+                <li><a href="delete.php">Delete</a></li>
                 <?php
                 if(isset($_SESSION['valid'])){
                     echo "<li><a href="."logout.php".">Logout</a></li>";
@@ -50,6 +53,14 @@
             ?>
             <a href="login.php"><input type="button" value="Login"></a>
             <a href="register.php"><input type="button" value="Register"></a>
+
+            <hr>
+
+            <?php if ($isHidden): ?>
+                <a href="delete.php" id="deleteBtn" name="deleteBtn" hidden="hidden"><input type="button" value="Delete"></a>
+            <?php else: ?>
+                <a href="delete.php"><input type="button" value="Delete"></a>
+            <?php endif; ?>
         </main>
     </div>
 </body>

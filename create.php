@@ -31,6 +31,7 @@
                 <li><a href="create.php">Create</a></li>
                 <li><a href="fill.php">Fill</a></li>
                 <li><a href="see.php">See</a></li>
+                <li><a href="delete.php">Delete</a></li>
                 <li><a href="logout.php">Logout</a></li>
             </ul>
         </aside>
@@ -62,7 +63,6 @@
                             <option value="password">Password</option>
                             <option value="date">Date</option>
                             <option value="checkbox">Checkbox</option>
-                            <option value="radio">Radio</option>
                         </select></span>
                     </p>
 
