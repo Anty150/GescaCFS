@@ -14,6 +14,7 @@ if(!isset($_SESSION['valid'])){
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="style2.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="wrapper">
@@ -36,7 +37,7 @@ if(!isset($_SESSION['valid'])){
     </aside>
     <main>
         <div class="form">
-            <div class="textBox" id="textBox">
+            <div class="ignoreWidthTextBox" id="textBox">
                 <?php
                 global $conn;
 
@@ -57,30 +58,50 @@ if(!isset($_SESSION['valid'])){
                     $userID = $row['ID'];
                 }
 
+                global $userID, $conn;
+                $query = "SELECT Name FROM fills WHERE User_ID = '$userID'";
+                $result = $conn->query($query);
 
-                downloadFile();
-                function downloadFile(){
-                    global $userID, $conn;
-                    $query = "SELECT Content, Name, Time_Created FROM fills WHERE User_ID = '$userID'";
-                    $result = $conn->query($query);
-
-                    if ($result->num_rows > 0) {
-                        while ($dataResult = $result->fetch_assoc()) {
-                            $content = $dataResult['Content'];
-                            $content .= "Created: ". $dataResult['Time_Created'];
-                            $filename = $dataResult['Name'] . ".txt";
-
-                            file_put_contents($filename, $content);
-
-                            $fileUrl = urlencode($filename);
-                            $displayName = $dataResult['Name'];
-
-                            echo '<a href="see.php?file=' . $fileUrl . '">' . $displayName . '</a>';
-                        }
+                if ($result->num_rows > 0) {
+                    $iter = 0;
+                    while ($dataResult = $result->fetch_assoc()) {
+                        $displayName = $dataResult['Name'];
+                        echo '<a href="#" id="hyperlink'.$iter.'"><p><span>'.$displayName.'</span></p></a>';
+                        $iter++;
                     }
                 }
                 $conn->close();
                 ?>
+                <script>
+                    $(document).ready(function() {
+                        $( 'p' ).on( "click", function() {
+                            let name = $(this).find('span:first-child').text();;
+
+                            $.ajax({
+                                type: 'POST',
+                                url: 'getTextToDownload.php',
+                                data: {selectedName: name},
+                                success: function (response){
+                                    let responses = response.split('#');
+
+                                    let content = responses[0];
+                                    let date = responses[1];
+
+                                    let docContent = content + date;
+                                    let link = document.createElement('a');
+                                    link.href = 'data:application/msword,' + encodeURIComponent(docContent);
+                                    link.download = name + '.txt'; // Set the .doc file name as the second paragraph text
+                                    link.style.display = 'none';
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+
+                                }
+                            });
+                    });
+                    } );
+                </script>
+
             </div>
         </div>
     </main>
