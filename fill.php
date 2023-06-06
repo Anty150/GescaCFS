@@ -30,7 +30,6 @@ if(!isset($_SESSION['valid'])){
             <li><a href="create.php">Create</a></li>
             <li><a href="fill.php">Fill</a></li>
             <li><a href="see.php">See</a></li>
-            <li><a href="delete.php">Delete</a></li>
             <li><a href="logout.php">Logout</a></li>
         </ul>
     </aside>

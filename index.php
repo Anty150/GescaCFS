@@ -28,7 +28,6 @@
                 <li><a href="create.php">Create</a></li>
                 <li><a href="fill.php">Fill</a></li>
                 <li><a href="see.php">See</a></li>
-                <li><a href="delete.php">Delete</a></li>
                 <?php
                 if(isset($_SESSION['valid'])){
                     echo "<li><a href="."logout.php".">Logout</a></li>";
@@ -56,11 +55,11 @@
 
             <hr>
 
-            <?php if ($isHidden): ?>
-                <a href="delete.php" id="deleteBtn" name="deleteBtn" hidden="hidden"><input type="button" value="Delete"></a>
-            <?php else: ?>
-                <a href="delete.php"><input type="button" value="Delete"></a>
+            <?php if (!$isHidden): ?>
+                <a href="delete.php"><input type="button" value="Delete Templates"></a>
+                <a href="deleteDocuments.php"><input type="button" value="Delete Documents"></a>
             <?php endif; ?>
+
         </main>
     </div>
 </body>

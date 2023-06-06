@@ -44,7 +44,7 @@ if(!isset($_SESSION['valid'])){
         }
         ?>
         <div class="form">
-            <form action="deleteScript.php" method="POST">
+            <form action="deleteDocumentsScript.php" method="POST">
                 <input type="hidden" name="textBoxContent" value="" id="textBoxContent">
                 <div class="textBox" id="textBox">
                     <?php
@@ -67,7 +67,7 @@ if(!isset($_SESSION['valid'])){
                         $userID = $row['ID'];
                     }
 
-                    $query = "SELECT Name FROM `names` WHERE `User ID` = '$userID'";
+                    $query = "SELECT Name FROM fills WHERE User_ID = '$userID'";
                     $result = $conn->query($query);
                     if ($result->num_rows > 0) {
                         $counter = 0;
@@ -136,7 +136,7 @@ if(!isset($_SESSION['valid'])){
         var xhr = new XMLHttpRequest();
 
         // Ustawiamy metodę i adres URL skryptu usuwającego
-        xhr.open("POST", "deleteScript.php", true);
+        xhr.open("POST", "deleteDocumentsScript.php", true);
 
         // Ustawiamy nagłówek żądania, aby wysłać dane w formacie URL-encoded
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
