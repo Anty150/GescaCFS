@@ -38,7 +38,7 @@ if(!isset($_SESSION['valid'])){
         <div class="form">
             <form action="fill.php" method="POST">
                 <p>
-                    <span><label for="textName">Fill Name</label></span>
+                    <span><label for="textFillName">Fill Name</label></span>
                     <span><input type="text" name="textFillName" id="textFillName"></span>
                 </p>
                 <div id="selectedItem"></div>
@@ -103,33 +103,70 @@ if(!isset($_SESSION['valid'])){
 <script>
     $(document).ready(function() {
         $('#comboSelect').on('change', function() {
-            let selectedItem = $(this).val();
+            if($(this).val() != "None"){
+                let selectedItem = $(this).val();
 
-            $.ajax({
-                type: 'POST',
-                url: 'getSelectedItemFromFill.php',
-                data: { selectedItem: selectedItem },
-                success: function(response) {
-                    let spanElements = ''; // Initialize spanElements as an empty string
+                $.ajax({
+                    type: 'POST',
+                    url: 'getSelectedItemFromFill.php',
+                    data: { selectedItem: selectedItem },
+                    success: function(response) {
+                        let spanElements = ''; // Initialize spanElements as an empty string
 
-                    let responses = response.split('#');
-                    let fieldNames = responses[0];
-                    let names = responses[1];
+                        let responses = response.split('#');
+                        let fieldNames = responses[0];
+                        let names = responses[1];
 
-                    let fieldNamesArray = fieldNames.split('|');
-                    let typeArray = names.split('|');
+                        let fieldNamesArray = fieldNames.split('|');
+                        let typeArray = names.split('|');
 
-                    for (let i = 0; i < fieldNamesArray.length; i++) {
-                        spanElements += '<p><span>' + fieldNamesArray[i];
-                        spanElements += '</span><span><input type="' + typeArray[i] + '" name="" id=""></span></p>';
+                        for (let i = 0; i < fieldNamesArray.length; i++) {
+                            spanElements += '<p><span>' + fieldNamesArray[i];
+                            spanElements += '</span><span><input type="' + typeArray[i] + '" name="" id=""></span></p>';
+                        }
+
+                        $('#textBox').html(spanElements);
+
+                        // Event handler for export button
+                        $('#submitSubmit').on('click', function() {
+                            let secondParagraph = $('#textFillName').val(); // Get the text of the second paragraph
+
+                            let inputs = $('input[type!="button"], textarea'); // Select all input and textarea elements
+
+                            let docContent = '';
+                            inputs.each(function() {
+                                let label = $(this).closest('p').find('span:first-child').text();
+                                let value = $(this).val();
+                                if(label != ""){
+                                    docContent += label + ': ' + value + '\n';
+                                }
+                            });
+                            $.ajax({
+                                type: 'POST',
+                                url: 'saveDocumentToDatabase.php',
+                                data: {
+                                    documentName: secondParagraph,
+                                    documentContent: docContent
+                                },
+                                success: function(response) {
+                                    alert('Document saved to database.');
+                                },
+                                error: function(xhr, status, error) {
+                                    alert('An error occurred while saving the document: ' + error);
+                                }
+                            });
+                        });
                     }
+                });
+            }else{
 
-                    $('#textBox').html(spanElements);
-                }
-            });
+            }
+
         });
     });
 </script>
+
+
 
 
 </body>
