@@ -49,6 +49,18 @@
                     $_SESSION['loginFailed'] = false;
                 }
             }
+            if(isset($_SESSION['registerBadPassword'])){
+                if($_SESSION['registerBadPassword']){
+                    echo "<p>The password must be at least 8 characters long</p>";
+                    $_SESSION['registerBadPassword'] = false;
+                }
+            }
+            if(isset($_SESSION['registerBadUsername'])){
+                if($_SESSION['registerBadUsername']){
+                    echo "<p>Username taken or none was provided</p>";
+                    $_SESSION['registerBadUsername'] = false;
+                }
+            }
             ?>
             <?php if ($isHidden): ?>
             <a href="login.php"><input type="button" value="Login"></a>

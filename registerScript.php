@@ -24,7 +24,7 @@
 
     if ($result->num_rows == 0) {
         if (strlen($registerPassword) < 8) {
-            // Password is bad
+            $_SESSION['registerBadPassword'] = true;
         } else {
             $hashedPassword = hashPassword($registerPassword);
             $stmt = $conn->prepare("INSERT INTO `users` (`ID`, `User_Name`, `Password`) VALUES (NULL, ?, ?)");
@@ -38,7 +38,7 @@
             }
         }
     } else {
-        // Do other stuff...
+        $_SESSION['registerBadUsername'] = true;
     }
 
     $stmt->close();

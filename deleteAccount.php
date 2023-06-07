@@ -24,6 +24,7 @@ if (isset($_SESSION['valid'])) {
 
     header('Location: newLogout.php');
 } else {
-    header('Location: index.php');
+    header('Location: login.php');
+    exit();
 }
 ?>
