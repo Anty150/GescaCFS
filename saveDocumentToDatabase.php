@@ -1,5 +1,15 @@
 <?php
 session_start();
+date_default_timezone_set('Europe/Madrid');
+
+//Geting date to create unique file name
+$info = getdate();
+$date = $info['mday'];
+$month = $info['mon'];
+$year = $info['year'];
+$hour = $info['hours'];
+$min = $info['minutes'];
+$sec = $info['seconds'];
 
 // Retrieve the document name and content from the client-side
 $documentName = $_POST['documentName'];
@@ -32,23 +42,7 @@ while ($row = $result->fetch_assoc()) {
 }
 $stmt->close();
 
-$sql = "SELECT fills.Name FROM fills WHERE fills.Name = ? AND fills.User_ID = ?";
-$stmt = $conn->prepare($sql);
-
-$stmt->bind_param("ss", $documentName, $userID);
-
-$stmt->execute();
-
-$result = $stmt->get_result();
-$namesCount = 0;
-
-while ($row = $result->fetch_assoc()) {
-    $namesCount++;
-}
-$stmt->close();
-if ($namesCount > 0) {
-    $documentName .= '_' . $namesCount;
-}
+$documentName .= '_' .$date.'/'.$month.'/'.$year.'_'.$hour.'-'.$min.'-'.$sec;
 
 // Prepare the SQL statement to insert the document details into the database
 $sql = "INSERT INTO fills (name, content, time_created, User_ID) VALUES (?, ?, CURRENT_TIMESTAMP, ?)";

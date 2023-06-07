@@ -80,11 +80,11 @@
     </div>
     <script>
         function validateForm() {
-            var name = document.getElementById("textName").value;
-            var fieldName = document.getElementById("textFieldName").value;
+            let name = document.getElementById("textName").value;
+            let fieldName = document.getElementById("textFieldName").value;
 
             if (name.trim() === "" || fieldName.trim() === "") {
-                alert("Please fill in all the fields.");
+                alert("Please fill all the fields.");
                 return false;
             }
         }

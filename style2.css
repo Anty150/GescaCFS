@@ -27,6 +27,13 @@
     .ignoreWidthTextBox input{
         width: 100%;
     }
+    #paragraphDisplayText{
+        height: 100%;
+    }
+    #paragraphDisplayText:hover{
+        background-color: transparent;
+        cursor: default;
+    }
 
     aside ul {
         list-style-type: none;

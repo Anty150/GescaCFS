@@ -1,30 +1,33 @@
 <?php
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-    global $conn;
-
     $selectedName = $_POST['selectedName'];
     $hostName = "localhost";
     $userName = "root";
     $password = "";
     $databaseName = "gescatest";
 
-    $userID = "NULL";
+    $userID = NULL;
 
     $conn = new mysqli($hostName, $userName, $password, $databaseName);
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $query = "SELECT users.ID FROM users INNER JOIN names ON users.ID = names.`User ID` WHERE users.User_Name = '".$_SESSION["username"]."';";
-    $result = $conn->query($query);
+    $query = "SELECT users.ID FROM users INNER JOIN names ON users.ID = names.`User ID` WHERE users.User_Name = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("s", $_SESSION["username"]);
+    $stmt->execute();
+    $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
         $userID = $row['ID'];
     }
-    global $userID, $conn;
-    $query = "SELECT Content, Time_Created FROM fills WHERE User_ID = '$userID' AND Name = '$selectedName'";
-    $result = $conn->query($query);
+
+    $query = "SELECT Content, Time_Created FROM fills WHERE User_ID = ? AND Name = ?";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("is", $userID, $selectedName);
+    $stmt->execute();
+    $result = $stmt->get_result();
     $response1 = '';
     $response2 = '';
 
@@ -35,24 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
     echo $response1 . "#" . $response2;
-
-    /*downloadFile($selectedName);
-    function downloadFile($selectedName){
-        global $userID, $conn;
-        $query = "SELECT Content, Time_Created FROM fills WHERE User_ID = '$userID' AND Name = '$selectedName'";
-        $result = $conn->query($query);
-        $response1 = '';
-        $response2 = '';
-
-        if ($result->num_rows > 0) {
-            while ($dataResult = $result->fetch_assoc()) {
-                $response1 = $dataResult['Content'];
-                $response2 = $dataResult['Time_Created'];
-            }
-        }
-        echo $response1 . "#" . $response2;
-    }*/
     $conn->close();
-
 }
-?>
+
+

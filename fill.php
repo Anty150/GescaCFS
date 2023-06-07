@@ -136,7 +136,8 @@ if(!isset($_SESSION['valid'])){
                         let inputs = $('input[type!="button"], textarea'); // Select all input and textarea elements
 
                         let docContent = '';
-                        inputs.each(function() {
+                        inputs.each(function(index, element) {
+                            isFirst = index === 0;
                             let value = "";
                             let label = $(this).closest('p').find('span:first-child').text();
                             if($(this).is(':checkbox')){
@@ -147,6 +148,9 @@ if(!isset($_SESSION['valid'])){
                                 }
                             }else{
                                 value = $(this).val();
+                                if(isFirst && value === ""){
+                                    value = documentName;
+                                }
                             }
 
                             if(label !== ""){

@@ -36,30 +36,36 @@ if(!isset($_SESSION['valid'])){
     </aside>
     <main>
         <div class="form">
+            <h3>Your Documents</h3>
             <div class="ignoreWidthTextBox" id="textBox">
                 <?php
-                global $conn;
-
                 $hostName = "localhost";
                 $userName = "root";
                 $password = "";
                 $databaseName = "gescatest";
-                $userID = "NULL";
 
                 $conn = new mysqli($hostName, $userName, $password, $databaseName);
                 if ($conn->connect_error) {
                     die("Connection failed: " . $conn->connect_error);
                 }
 
-                $query = "SELECT users.ID FROM users INNER JOIN names ON users.ID = names.`User ID` WHERE users.User_Name = '".$_SESSION["username"]."';";
-                $result = $conn->query($query);
+                $userID = null;
+
+                $query = "SELECT users.ID FROM users INNER JOIN names ON users.ID = names.`User ID` WHERE users.User_Name = ?";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("s", $_SESSION["username"]);
+                $stmt->execute();
+                $result = $stmt->get_result();
+
                 while ($row = $result->fetch_assoc()) {
                     $userID = $row['ID'];
                 }
 
-                global $userID, $conn;
-                $query = "SELECT Name FROM fills WHERE User_ID = '$userID'";
-                $result = $conn->query($query);
+                $query = "SELECT Name FROM fills WHERE User_ID = ?";
+                $stmt = $conn->prepare($query);
+                $stmt->bind_param("i", $userID);
+                $stmt->execute();
+                $result = $stmt->get_result();
 
                 if ($result->num_rows > 0) {
                     $iter = 0;
@@ -69,38 +75,54 @@ if(!isset($_SESSION['valid'])){
                         $iter++;
                     }
                 }
+
                 $conn->close();
                 ?>
                 <script>
                     $(document).ready(function() {
-                        $( 'p' ).on( "click", function() {
-                            let name = $(this).find('span:first-child').text();;
+                        $( 'a' ).on( "click", function() {
+                            if (!$(this).hasClass("selected")){
+                                let name = $(this).find('span:first-child').text();
 
-                            $.ajax({
-                                type: 'POST',
-                                url: 'getTextToDownload.php',
-                                data: {selectedName: name},
-                                success: function (response){
-                                    let responses = response.split('#');
+                                $.ajax({
+                                    type: 'POST',
+                                    url: 'getTextToDownload.php',
+                                    data: {selectedName: name},
+                                    success: function (response){
+                                        let responses = response.split('#');
 
-                                    let content = responses[0];
-                                    let date = responses[1];
+                                        let content = responses[0];
+                                        let date = responses[1];
 
-                                    let docContent = content + date;
-                                    let link = document.createElement('a');
-                                    link.href = 'data:application/msword,' + encodeURIComponent(docContent);
-                                    link.download = name + '.txt'; // Set the .doc file name as the second paragraph text
-                                    link.style.display = 'none';
-                                    document.body.appendChild(link);
-                                    link.click();
-                                    document.body.removeChild(link);
+                                        let docContent = content + date;
+                                        document.getElementById("paragraphDisplayText").innerHTML = ("<pre>" + docContent + "</pre>");
 
-                                }
-                            });
+                                        $('#downloadButton').remove(); // Remove existing button if any
+                                        $('#paragraphDisplayText').append('<input type="button" id="downloadButton" value="Download">');
+
+                                        $('#downloadButton').on('click', function() {
+                                            let link = document.createElement('a');
+                                            link.href = 'data:application/msword,' + encodeURIComponent(docContent);
+                                            link.download = name + '.txt';
+                                            link.style.display = 'none';
+                                            document.body.appendChild(link);
+                                            link.click();
+                                            document.body.removeChild(link);
+                                            });
+                                    }
+                                });
+                            }
+                            else{
+                                return 0;
+                            }
+                        });
                     });
-                    } );
                 </script>
 
+            </div>
+            <h3>Document Preview</h3>
+            <div class="ignoreWidthTextBox" id="textPreview">
+                <p id="paragraphDisplayText"></p>
             </div>
         </div>
     </main>

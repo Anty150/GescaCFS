@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -13,29 +14,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         die("Connection failed: " . $conn->connect_error);
     }
     $userName = $_SESSION['username'];
-    $userID = "NULL";
+    $userID = NULL;
 
-    $sql = "SELECT ID FROM users WHERE `User_Name` = '$userName';";
-    $result = $conn->query($sql);
+    $sql = "SELECT ID FROM users WHERE `User_Name` = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("s", $userName);
+    $stmt->execute();
+    $result = $stmt->get_result();
     while ($row = $result->fetch_assoc()) {
         $userID = $row['ID'];
     }
 
-    $queryFieldNameTB = "SELECT `field name` FROM `field names` JOIN names ON `field names`.`Name ID` = names.ID WHERE names.Name = '$selectedItem' AND `field names`.`User ID` = '$userID';";
-    $result = $conn->query($queryFieldNameTB);
+    $queryFieldNameTB = "SELECT `field name` FROM `field names` JOIN names ON `field names`.`Name ID` = names.ID WHERE names.Name = ? AND `field names`.`User ID` = ?";
+    $stmt = $conn->prepare($queryFieldNameTB);
+    $stmt->bind_param("si", $selectedItem, $userID);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
+        $fieldNames = array();
         while ($row = $result->fetch_assoc()) {
             $fieldNames[] = $row['field name'];
         }
         $response1 = implode('|', $fieldNames);
-    }
-    else {
+    } else {
         $response1 = "No field names found.";
     }
 
-    $queryTypesTB = "SELECT `type` FROM `field names` JOIN names ON `field names`.`Name ID` = names.ID WHERE names.Name = '$selectedItem' AND `field names`.`User ID` = '$userID';";
-    $resultAllNames = $conn->query($queryTypesTB);
+    $queryTypesTB = "SELECT `type` FROM `field names` JOIN names ON `field names`.`Name ID` = names.ID WHERE names.Name = ? AND `field names`.`User ID` = ?";
+    $stmt = $conn->prepare($queryTypesTB);
+    $stmt->bind_param("si", $selectedItem, $userID);
+    $stmt->execute();
+    $resultAllNames = $stmt->get_result();
 
     if ($resultAllNames->num_rows > 0) {
         $names = array();
@@ -51,4 +61,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     echo $response1 . "#" . $response2;
 }
-?>
