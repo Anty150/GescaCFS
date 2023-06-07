@@ -28,7 +28,7 @@ if (!isset($_SESSION['valid'])) {
         }
         $stmt->close();
 
-        $nameToRemove = $_POST['name'];
+        $nameToRemove = $_POST['Name'];
 
         $query = "DELETE FROM names WHERE `User ID` = '$userID' AND `Name` = ?";
 

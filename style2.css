@@ -169,5 +169,7 @@
     .form_footer{
         font-size: small;
     }
-
+    .manager {
+        text-align: center;
+    }
 }

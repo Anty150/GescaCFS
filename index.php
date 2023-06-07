@@ -60,7 +60,7 @@
                 <a href="deleteDocuments.php"><input type="button" value="Delete Documents"></a>
                 <hr>
 
-                <p>Account manager:</p>
+                <p class="manager">Account manager:</p>
                 <a href="deleteAccount.php"><input type="button" value="Delete Account" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');"></a>
 
             <?php endif; ?>
