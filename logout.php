@@ -43,7 +43,16 @@
         </ul>
     </aside>
     <main>
-        <p>Logged out!</p>
+        <p>
+            <?php
+            if(isset($_SESSION['isDeleted']))
+                if ($_SESSION['isDeleted']){
+                    echo "Your account has been deleted.";
+                    unset($_SESSION['isDeleted']);
+                }
+            ?>
+            Logged out!
+        </p>
         <a href="login.php"><input type="button" value="Login"></a>
         <a href="register.php"><input type="button" value="Register"></a>
     </main>
