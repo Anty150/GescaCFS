@@ -63,12 +63,12 @@
                 <hr>
                 <p class="manager">Account manager:</p>
                 <a href="deleteAccount.php"><input type="button" value="Delete Account" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');"></a>
+                <?php if ($_SESSION['permission'] == 'admin'): ?>
+                    <hr>
+                    <p class="manager">Admin panel:</p>
+                    <a href="adminViewTemplates.php"><input type="button" value="Admin View Templates"></a>
+                <?php endif; ?>
             <?php endif;?>
-            <?php if ($_SESSION['permission'] == 'admin'): ?>
-                <hr>
-                <p class="manager">Admin panel:</p>
-                <a href="adminViewTemplates.php"><input type="button" value="Admin View Templates"></a>
-            <?php endif; ?>
 
         </main>
     </div>

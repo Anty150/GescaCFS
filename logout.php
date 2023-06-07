@@ -4,6 +4,7 @@
     if(!isset($_SESSION['valid'])){
         header("Location:login.php");
     }else{
+        unset($_SESSION["permission"]);
         unset($_SESSION["username"]);
         unset($_SESSION["valid"]);
         unset($_SESSION["registered"]);

@@ -35,15 +35,8 @@ if(!isset($_SESSION['valid'])){
         </ul>
     </aside>
     <main>
-        <?php
-        if(isset($_SESSION['isDuplicate'])){
-            if ($_SESSION['isDuplicate']){
-                echo "<p>Name already exists!</p>";
-                $_SESSION['isDuplicate'] = false;
-            }
-        }
-        ?>
         <div class="form">
+            <p><h3>Created document templates</h3></p>
             <form action="deleteScript.php" method="POST">
                 <input type="hidden" name="textBoxContent" value="" id="textBoxContent">
                 <div class="textBox" id="textBox">
@@ -90,7 +83,10 @@ if(!isset($_SESSION['valid'])){
                     ?>
                 </div>
                 <p>
-                    <input type="button" name="buttonRemove" id="buttonRemove" value="-">
+                    <span><input type="button" name="buttonRemove" id="buttonRemove" value="-"></span>
+                </p>
+                <p>
+                    <span><input type="button" name="buttonRemoveAll" id="buttonRemoveAll" value="Remove All" onclick="removeAll()"></span>
                 </p>
             </form>
         </div>
@@ -102,6 +98,25 @@ if(!isset($_SESSION['valid'])){
     let previousId = "p0";
     let isSelected = false;
 
+    function removeAll(){
+        let xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "deleteScriptAll.php", true);
+
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+            }
+        };
+
+        xhr.send("Name=" + encodeURIComponent(name));
+        document.getElementById("textBox").innerHTML = "";
+
+        isSelected = false;
+        previousId = "p0";
+    }
     function operationsOnRows(id) {
         isSelected = true;
         buttonRemove.removeEventListener("click", previousClickHandler, false);
@@ -112,7 +127,6 @@ if(!isset($_SESSION['valid'])){
                 rowToRemove.remove();
                 isSelected = false;
 
-                // Wywołaj funkcję do usunięcia rekordu z bazy danych
                 deleteFromDatabase(rowToRemove.innerText);
             }
         };
@@ -132,24 +146,18 @@ if(!isset($_SESSION['valid'])){
     }
 
     function deleteFromDatabase(name) {
-        // Tworzymy nowy obiekt XMLHTTPRequest
-        var xhr = new XMLHttpRequest();
+        let xhr = new XMLHttpRequest();
 
-        // Ustawiamy metodę i adres URL skryptu usuwającego
         xhr.open("POST", "deleteScript.php", true);
 
-        // Ustawiamy nagłówek żądania, aby wysłać dane w formacie URL-encoded
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
-        // Definiujemy funkcję zwrotną, która zostanie wywołana po otrzymaniu odpowiedzi od serwera
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                // Wyświetlamy odpowiedź serwera w konsoli
                 console.log(xhr.responseText);
             }
         };
 
-        // Wysyłamy żądanie POST z nazwą do usunięcia jako parametrem
         xhr.send("Name=" + encodeURIComponent(name));
     }
 </script>

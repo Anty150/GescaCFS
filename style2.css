@@ -1,4 +1,10 @@
 @media (min-width: 800px) {
+    html{
+        scroll-behavior: smooth;
+    }
+    #buttonRemoveAll{
+        font-size: small;
+    }
     .ignoreWidthTextBox{
         padding: 10px;
         margin-top: 40px;

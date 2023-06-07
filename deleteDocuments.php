@@ -44,6 +44,7 @@ if(!isset($_SESSION['valid'])){
         }
         ?>
         <div class="form">
+            <p><h3>Created documents</h3></p>
             <form action="deleteDocumentsScript.php" method="POST">
                 <input type="hidden" name="textBoxContent" value="" id="textBoxContent">
                 <div class="textBox" id="textBox">
@@ -90,7 +91,10 @@ if(!isset($_SESSION['valid'])){
                     ?>
                 </div>
                 <p>
-                    <input type="button" name="buttonRemove" id="buttonRemove" value="-">
+                    <span><input type="button" name="buttonRemove" id="buttonRemove" value="-"></span>
+                </p>
+                <p>
+                    <span><input type="button" name="buttonRemoveAll" id="buttonRemoveAll" value="Remove All" onclick="removeAll()"></span>
                 </p>
             </form>
         </div>
@@ -102,6 +106,25 @@ if(!isset($_SESSION['valid'])){
     let previousId = "p0";
     let isSelected = false;
 
+    function removeAll(){
+        let xhr = new XMLHttpRequest();
+
+        xhr.open("POST", "deleteDocumentsScriptAll.php", true);
+
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                console.log(xhr.responseText);
+            }
+        };
+
+        xhr.send("Name=" + encodeURIComponent(name));
+        document.getElementById("textBox").innerHTML = "";
+
+        isSelected = false;
+        previousId = "p0";
+    }
     function operationsOnRows(id) {
         isSelected = true;
         buttonRemove.removeEventListener("click", previousClickHandler, false);
