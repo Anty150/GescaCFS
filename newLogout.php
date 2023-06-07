@@ -12,6 +12,7 @@ if(!isset($_SESSION['valid'])){
     unset($_SESSION["loginFailed"]);
     unset($_SESSION["registerBadUsername"]);
     unset($_SESSION["registerBadPassword"]);
+    session_destroy();
 }
 ?>
 <script>
