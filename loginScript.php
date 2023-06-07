@@ -15,7 +15,7 @@
     $loginUsername = $_POST['username'];
     $loginPassword = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT `ID`, `Password` FROM `users` WHERE `User_Name` = ?");
+    $stmt = $conn->prepare("SELECT `ID`, `Password`, `Permission` FROM `users` WHERE `User_Name` = ?");
     $stmt->bind_param("s", $loginUsername);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -25,11 +25,14 @@
     } else {
         $row = $result->fetch_assoc();
         $dbPasswordHashed = $row['Password'];
+        $permission = $row['Permission'];
 
         if (password_verify($loginPassword, $dbPasswordHashed)) {
             $_SESSION['valid'] = true;
             $_SESSION['timeout'] = time();
             $_SESSION['username'] = $loginUsername;
+            $_SESSION['permission'] = $permission;
+
             echo "Logged";
         } else {
             $_SESSION['loginFailed'] = true;
