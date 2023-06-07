@@ -68,8 +68,7 @@ if(!isset($_SESSION['valid'])){
                                 echo $userID;
                             }
 
-                            $query ="SELECT Name FROM `names` WHERE `User ID` = '$userID'
-";
+                            $query ="SELECT Name FROM `names` WHERE `User ID` = '$userID'";
 
                             $result = $conn->query($query);
                             if($result->num_rows> 0){
@@ -176,7 +175,6 @@ if(!isset($_SESSION['valid'])){
                     });
                 }
             });
-
         });
     });
 </script>
