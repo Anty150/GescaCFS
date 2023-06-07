@@ -44,7 +44,7 @@
                 }
             ?>
             <div class="form">
-                <form action="addToDB.php" method="POST">
+                <form action="addToDB.php" method="POST" onsubmit="return validateForm()">
                     <p>
                         <span><label for="textName">Name</label></span>
                         <span><input type="text" name="textName" id="textName"></span>
@@ -59,7 +59,6 @@
                         <span><label for="comboType">Type</label></span>
                         <span><select name="comboType" id="comboType">
                             <option value="text">Text</option>
-                            <option value="password">Password</option>
                             <option value="date">Date</option>
                             <option value="checkbox">Checkbox</option>
                         </select></span>
@@ -79,5 +78,16 @@
             </div>
         </main>
     </div>
+    <script>
+        function validateForm() {
+            var name = document.getElementById("textName").value;
+            var fieldName = document.getElementById("textFieldName").value;
+
+            if (name.trim() === "" || fieldName.trim() === "") {
+                alert("Please fill in all the fields.");
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>

@@ -25,9 +25,14 @@ if (!isset($_SESSION['valid'])) {
                 $spanElements = $paragraph->getElementsByTagName('span');
                 $textFieldName = $spanElements->item(0)->nodeValue;
                 $comboType = $spanElements->item(1)->nodeValue;
+
+                // Sanitize and validate field values
+                $sanitizedTextFieldName = filter_var($textFieldName, FILTER_SANITIZE_STRING);
+                $sanitizedComboType = filter_var($comboType, FILTER_SANITIZE_STRING);
+
                 $values[] = array(
-                    'textFieldName' => $textFieldName,
-                    'comboType' => $comboType
+                    'textFieldName' => $sanitizedTextFieldName,
+                    'comboType' => $sanitizedComboType
                 );
             }
         }
