@@ -12,7 +12,7 @@ if(!isset($_SESSION['valid'])){
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>See</title>
     <link rel="stylesheet" href="style2.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -31,7 +31,7 @@ if(!isset($_SESSION['valid'])){
             <li><a href="create.php">Create</a></li>
             <li><a href="fill.php">Fill</a></li>
             <li><a href="see.php">See</a></li>
-            <li><a href="logout.php">Logout</a></li>
+            <li><a href="newLogout.php">Logout</a></li>
         </ul>
     </aside>
     <main>

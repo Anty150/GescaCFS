@@ -22,8 +22,7 @@ if (isset($_SESSION['valid'])) {
     $stmt->close();
     $conn->close();
 
-    $_SESSION['isDeleted'] = true;
-    header('Location: logout.php');
+    header('Location: newLogout.php');
 } else {
     header('Location: index.php');
 }
