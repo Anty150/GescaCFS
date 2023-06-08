@@ -20,10 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die("Connection failed: " . $conn->connect_error);
     }
 
-    $selectedName = $_POST["selectedName"];
-    $query = "DELETE FROM fills WHERE Name = ?";
+    $selectedName = $_POST['selectedName'];
+    $userId = $_POST['UserID'];
+
+    $query = "DELETE FROM `fills` WHERE `Name` = ? AND `User_ID` = ?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("s", $selectedName);
+    $stmt->bind_param("ss", $selectedName, $userId);
     $stmt->execute();
 
     $stmt->close();
@@ -33,4 +35,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 } else {
     echo "Invalid request.";
 }
-?>
+
