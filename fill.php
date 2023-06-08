@@ -65,7 +65,6 @@ if(!isset($_SESSION['valid'])){
                             $result = $conn->query($query);
                             while ($row = $result->fetch_assoc()) {
                                 $userID = $row['ID'];
-                                echo $userID;
                             }
 
                             $query ="SELECT Name FROM `names` WHERE `User ID` = '$userID'";

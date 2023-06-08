@@ -61,7 +61,7 @@ if ($_SESSION['permission'] != 'admin') {
                     $iter = 0;
                     while ($dataResult = $result->fetch_assoc()) {
                         $displayName = $dataResult['Name'];
-                        echo '<a href="#" id="hyperlink' . $iter . '"><p><span>' . $displayName . '</span></p></a>';
+                        echo '<a href="#paragraphDisplayText" id="hyperlink' . $iter . '"><p><span>' . $displayName . '</span></p></a>';
                         $iter++;
                     }
                 }

@@ -63,21 +63,22 @@
             }
             ?>
             <?php if ($isHidden): ?>
-            <a href="login.php"><input type="button" value="Login"></a>
-            <a href="register.php"><input type="button" value="Register"></a>
+                <p class="manager">Login and register</p>
+                <a href="login.php"><input type="button" value="Login"></a>
+                <a href="register.php"><input type="button" value="Register"></a>
             <?php endif; ?>
 
             <?php if (!$isHidden): ?>
-                <p class="manager">File manager:</p>
+                <p class="manager">File manager</p>
 
                 <a href="delete.php"><input type="button" value="Delete Templates"></a>
                 <a href="deleteDocuments.php"><input type="button" value="Delete Documents"></a>
                 <hr>
-                <p class="manager">Account manager:</p>
+                <p class="manager">Account manager</p>
                 <a href="deleteAccount.php"><input type="button" value="Delete Account" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');"></a>
                 <?php if ($_SESSION['permission'] == 'admin'): ?>
                     <hr>
-                    <p class="manager">Admin panel:</p>
+                    <p class="manager">Admin panel</p>
                     <a href="adminViewTemplates.php"><input type="button" value="Admin View Templates"></a>
                     <a href="adminViewDocuments.php"><input type="button" value="Admin View Documents"></a>
                 <?php endif; ?>
