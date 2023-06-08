@@ -52,7 +52,7 @@ if ($_SESSION['permission'] != 'admin') {
                     die("Connection failed: " . $conn->connect_error);
                 }
 
-                $query = "SELECT `Name`, `ID` FROM `names`";
+                $query = "SELECT * FROM `names`";
                 $stmt = $conn->prepare($query);
                 $stmt->execute();
                 $result = $stmt->get_result();
@@ -61,7 +61,7 @@ if ($_SESSION['permission'] != 'admin') {
                     $iter = 0;
                     while ($dataResult = $result->fetch_assoc()) {
                         $displayName = $dataResult['Name'];
-                        echo '<a href="#paragraphDisplayText" id="hyperlink'.$iter.'" data-id="'.$dataResult['ID'].'"><p><span>'.$displayName.'</span></p></a>';
+                        echo '<a href="#paragraphDisplayText" id="hyperlink'.$iter.'" data-id="'.$dataResult['ID'].'" data-user="'.$dataResult['User ID'].'"><p><span>'.$displayName.'</span></p></a>';
                         $iter++;
                     }
                 }
@@ -74,6 +74,7 @@ if ($_SESSION['permission'] != 'admin') {
                             if (!$(this).hasClass('selected')) {
                                 let id = $(this).data('id');
                                 let name = $(this).find('span:first-child').text();
+                                let userId = $(this).data('user');
 
                                 $.ajax({
                                     type: 'POST',
@@ -89,7 +90,7 @@ if ($_SESSION['permission'] != 'admin') {
                                             $.ajax({
                                                 type: 'POST',
                                                 url: 'adminDeleteTemplates.php',
-                                                data: {Name: name},
+                                                data: {Name: name, UserID: userId},
                                                 success: function (response) {
                                                     console.log(response);
                                                     location.reload();

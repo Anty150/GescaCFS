@@ -17,12 +17,12 @@ if (!isset($_SESSION['valid'])) {
             die('Connect Error (' . $conn->connect_errno . ') ' . $conn->connect_error);
         }
 
-        $nameToRemove = $_POST['Name'];
+        $selectedName = $_POST['Name'];
+        $userId = $_POST['UserID'];
 
-        $query = "DELETE FROM names WHERE `Name` = ?";
-
+        $query = "DELETE FROM `names` WHERE `Name` = ? AND `User ID` = ?";
         $stmt = $conn->prepare($query);
-        $stmt->bind_param("s", $nameToRemove);
+        $stmt->bind_param("ss", $selectedName, $userId);
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
