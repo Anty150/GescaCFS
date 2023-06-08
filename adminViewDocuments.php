@@ -61,7 +61,7 @@ if ($_SESSION['permission'] != 'admin') {
                     $iter = 0;
                     while ($dataResult = $result->fetch_assoc()) {
                         $displayName = $dataResult['Name'];
-                        echo '<a href="#" id="hyperlink'.$iter.'"><p><span>'.$displayName.'</span></p></a>';
+                        echo '<a href="#" id="hyperlink' . $iter . '"><p><span>' . $displayName . '</span></p></a>';
                         $iter++;
                     }
                 }
@@ -69,9 +69,9 @@ if ($_SESSION['permission'] != 'admin') {
                 $conn->close();
                 ?>
                 <script>
-                    $(document).ready(function() {
-                        $( 'a' ).on( "click", function() {
-                            if (!$(this).hasClass("selected")){
+                    $(document).ready(function () {
+                        $('a').on("click", function () {
+                            if (!$(this).hasClass("selected")) {
                                 let name = $(this).find('span:first-child').text();
 
                                 $.ajax({
@@ -90,7 +90,7 @@ if ($_SESSION['permission'] != 'admin') {
                                         $('#downloadButton').remove(); // Remove existing button if any
                                         $('#paragraphDisplayText').append('<input type="button" id="downloadButton" value="Download">');
 
-                                        $('#downloadButton').on('click', function() {
+                                        $('#downloadButton').on('click', function () {
                                             let link = document.createElement('a');
                                             link.href = 'data:application/msword,' + encodeURIComponent(docContent);
                                             link.download = name + '.txt';
@@ -99,10 +99,26 @@ if ($_SESSION['permission'] != 'admin') {
                                             link.click();
                                             document.body.removeChild(link);
                                         });
+
+                                        $('#deleteButton').remove(); // Remove existing button if any
+                                        $('#paragraphDisplayText').append('<input type="button" id="deleteButton" value="Delete">');
+
+                                        $('#deleteButton').on('click', function () {
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: 'adminDeleteDocument.php',
+                                                data: {selectedName: name},
+                                                success: function (response) {
+                                                    location.reload();
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    alert("Error: " + error);
+                                                }
+                                            });
+                                        });
                                     }
                                 });
-                            }
-                            else{
+                            } else {
                                 return 0;
                             }
                         });

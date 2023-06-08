@@ -35,5 +35,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     echo $response1 . "#" . $response2;
     $conn->close();
 }
-
-

@@ -83,7 +83,7 @@ if(!isset($_SESSION['valid'])){
                     ?>
                 </div>
                 <p>
-                    <span><input type="button" name="buttonRemove" id="buttonRemove" value="-"></span>
+                    <span><input type="button" name="buttonRemove" id="buttonRemove" value="Delete"></span>
                 </p>
                 <p>
                     <span><input type="button" name="buttonRemoveAll" id="buttonRemoveAll" value="Remove All" onclick="removeAll()"></span>

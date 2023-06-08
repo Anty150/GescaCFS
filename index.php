@@ -79,6 +79,7 @@
                     <hr>
                     <p class="manager">Admin panel:</p>
                     <a href="adminViewTemplates.php"><input type="button" value="Admin View Templates"></a>
+                    <a href="adminViewDocuments.php"><input type="button" value="Admin View Documents"></a>
                 <?php endif; ?>
             <?php endif;?>
 

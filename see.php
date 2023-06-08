@@ -110,6 +110,24 @@ if(!isset($_SESSION['valid'])){
                                             link.click();
                                             document.body.removeChild(link);
                                             });
+
+                                        $('#deleteButton').remove(); // Remove existing button if any
+                                        $('#paragraphDisplayText').append('<input type="button" id="deleteButton" value="Delete">');
+
+                                        $('#deleteButton').on('click', function () {
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: 'deleteDocumentsScript.php',
+                                                data: {Name: name},
+                                                success: function (response) {
+                                                    console.log(response);
+                                                    location.reload();
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    alert("Error: " + error);
+                                                }
+                                            });
+                                        });
                                     }
                                 });
                             }
