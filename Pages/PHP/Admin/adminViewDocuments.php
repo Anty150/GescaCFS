@@ -59,11 +59,24 @@ if ($_SESSION['permission'] != 'admin') {
                 $stmt->execute();
                 $result = $stmt->get_result();
 
+
                 if ($result->num_rows > 0) {
                     $iter = 0;
                     while ($dataResult = $result->fetch_assoc()) {
                         $displayName = $dataResult['Name'];
-                        echo '<a href="#paragraphDisplayText" id="hyperlink'.$iter.'" data-user="'.$dataResult['User_ID'].'"><p><span>'.$displayName.'</span></p></a>';
+
+                        $userQuery = "SELECT User_Name FROM users WHERE ID = ?";
+                        $userStmt = $conn->prepare($userQuery);
+                        $userStmt->bind_param("i", $dataResult['User_ID']);
+                        $userStmt->execute();
+                        $userResult = $userStmt->get_result();
+                        $username = '';
+                        if ($userResult->num_rows > 0) {
+                            $userData = $userResult->fetch_assoc();
+                            $username = $userData['User_Name'];
+                        }
+
+                        echo '<a href="#paragraphDisplayText" id="hyperlink'.$iter.'" data-user="'.$dataResult['User_ID'].'" data-username="'.$username.'"><p><span>'.$displayName.'</span></a></p>';
                         $iter++;
                     }
                 }
@@ -76,18 +89,20 @@ if ($_SESSION['permission'] != 'admin') {
                             if (!$(this).hasClass('selected')) {
                                 let name = $(this).find('span:first-child').text();
                                 let userId = $(this).data('user');
+                                let username = $(this).data('username');
 
                                 $.ajax({
                                     type: 'POST',
                                     url: '\\GescaCFS\\Scripts\\PHP\\Admin\\Handling_document\\adminViewDocumentsScript.php',
-                                    data: {selectedName: name},
+                                    data: {selectedName: name, username: username},
                                     success: function (response){
                                         let responses = response.split('#');
 
                                         let content = responses[0];
                                         let date = responses[1];
 
-                                        let docContent = content + date;
+                                        let docContent = "Username: " + username + "\n\n";
+                                        docContent += content + date;
                                         document.getElementById("paragraphDisplayText").innerHTML = ("<pre>" + docContent + "</pre>");
 
                                         $('#downloadButton').remove(); // Remove existing button if any

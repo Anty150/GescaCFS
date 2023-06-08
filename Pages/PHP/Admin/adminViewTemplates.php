@@ -40,7 +40,7 @@ if ($_SESSION['permission'] != 'admin') {
     <main>
         <div class="form">
             <h3>Users Templates</h3>
-            <div class="ignoreWidthTextBox" id="textBox">
+            <div class="textBox" id="textBox">
                 <?php
                 $hostName = "localhost";
                 $userName = "root";
@@ -61,7 +61,19 @@ if ($_SESSION['permission'] != 'admin') {
                     $iter = 0;
                     while ($dataResult = $result->fetch_assoc()) {
                         $displayName = $dataResult['Name'];
-                        echo '<a href="#paragraphDisplayText" id="hyperlink'.$iter.'" data-id="'.$dataResult['ID'].'" data-user="'.$dataResult['User ID'].'"><p><span>'.$displayName.'</span></p></a>';
+
+                        $userQuery = "SELECT User_Name FROM users WHERE ID = ?";
+                        $userStmt = $conn->prepare($userQuery);
+                        $userStmt->bind_param("i", $dataResult['User ID']);
+                        $userStmt->execute();
+                        $userResult = $userStmt->get_result();
+                        $username = '';
+                        if ($userResult->num_rows > 0) {
+                            $userData = $userResult->fetch_assoc();
+                            $username = $userData['User_Name'];
+                        }
+
+                        echo '<a href="#paragraphDisplayText" id="hyperlink'.$iter.'" data-id="'.$dataResult['ID'].'" data-user="'.$dataResult['User ID'].'"><p><span>'.$displayName.'</span></a><span>'.$username.'</span></p>';
                         $iter++;
                     }
                 }
