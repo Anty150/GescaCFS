@@ -83,8 +83,9 @@
         function validateForm() {
             let name = document.getElementById("textName").value;
             let fieldName = document.getElementById("textFieldName").value;
+            let textBoxContent = document.getElementById("textBoxContent").value;
 
-            if (name.trim() === "" || fieldName.trim() === "") {
+            if (name.trim() === "" || fieldName.trim() === "" || textBoxContent.trim() === "") {
                 alert("Please fill all the fields.");
                 return false;
             }

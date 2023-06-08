@@ -73,20 +73,32 @@ if ($_SESSION['permission'] != 'admin') {
                         $('a').on('click', function() {
                             if (!$(this).hasClass('selected')) {
                                 let id = $(this).data('id');
+                                let name = $(this).find('span:first-child').text();
 
                                 $.ajax({
                                     type: 'POST',
                                     url: 'adminViewTemplatesScript.php',
                                     data: {selectedID: id},
                                     success: function(response) {
-                                        let responses = response.split('#');
+                                        document.getElementById('paragraphDisplayText').innerHTML = '<pre>' + response + '</pre>';
 
-                                        let field_name = responses[0];
-                                        let type = responses[1];
+                                        $('#deleteButton').remove(); // Remove existing button if any
+                                        $('#paragraphDisplayText').append('<input type="button" id="deleteButton" value="Delete">');
 
-                                        let docContent = field_name + type;
-                                        //to fix
-                                        document.getElementById('paragraphDisplayText').innerHTML = '<pre>' + docContent + '</pre>';
+                                        $('#deleteButton').on('click', function () {
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: 'adminDeleteTemplates.php',
+                                                data: {Name: name},
+                                                success: function (response) {
+                                                    console.log(response);
+                                                    location.reload();
+                                                },
+                                                error: function (xhr, status, error) {
+                                                    alert("Error: " + error);
+                                                }
+                                            });
+                                        });
                                     }
                                 });
                             } else {
