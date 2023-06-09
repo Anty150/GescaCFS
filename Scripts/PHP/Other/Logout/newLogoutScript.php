@@ -2,7 +2,7 @@
 session_start();
 
 if(!isset($_SESSION['valid'])){
-    header("Location: /GescaCFS/Scripts/PHP/Other/Login/loginScript.php");
+    header("Location:/GescaCFS/Pages/PHP/Other/Login/login.php");
     exit();
 }else{
     unset($_SESSION["permission"]);

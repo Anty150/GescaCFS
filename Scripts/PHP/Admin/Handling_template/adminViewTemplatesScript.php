@@ -1,7 +1,8 @@
 <?php
 session_start();
 if(!isset($_SESSION['valid'])){
-    header("Location: /GescaCFS/Scripts/PHP/Other/Login/loginScript.php");
+    header("Location:/GescaCFS/Pages/PHP/Other/Login/login.php");
+    exit();
 }
 if ($_SESSION['permission'] != 'admin') {
     header("Location: /GescaCFS/Pages/PHP/Other/Main/mainPage.php");

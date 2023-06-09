@@ -24,7 +24,7 @@ if (isset($_SESSION['valid'])) {
 
     header('Location: /GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php');
 } else {
-    header('Location: /GescaCFS/Scripts/PHP/Other/Login/loginScript.php');
+    header("Location:/GescaCFS/Pages/PHP/Other/Login/login.php");
     exit();
 }
 ?>

@@ -2,7 +2,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['valid'])){
-    header("Location:/GescaCFS/Scripts/PHP/Other/Login/login.php");
+    header("Location:/GescaCFS/Pages/PHP/Other/Login/login.php");
     exit();
 }
 ?>
