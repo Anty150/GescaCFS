@@ -38,7 +38,7 @@ if(!isset($_SESSION['valid'])){
         <div class="form">
             <form action="" method="POST">
                 <p>
-                    <span><label for="textFillName">Fill Name</label></span>
+                    <span><label for="textFillName">Document Name</label></span>
                     <span><input type="text" name="textFillName" id="textFillName"></span>
                 </p>
                 <div id="selectedItem"></div>
