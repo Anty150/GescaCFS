@@ -7,13 +7,12 @@ if(!isset($_SESSION['valid'])){
     exit();
 }
 ?>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Delete</title>
+    <title>Borrar plantillas</title>
     <link rel="stylesheet" href="/GescaCFS/Styles/styles.css">
 </head>
 <body>
@@ -22,21 +21,21 @@ if(!isset($_SESSION['valid'])){
         <ul>
             <?php
             if(isset($_SESSION['valid'])){
-                echo "<p>Welcome ".$_SESSION["username"]."</p>";
+                echo "<p>Bienvenido ".$_SESSION["username"]."</p>";
             }else{
-                echo "<p>Not logged in</p>";
+                echo "<p>No conectado.</p>";
             }
             ?>
-            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Main Page</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Create</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Fill</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">See</a></li>
-            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Logout</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Página principal</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Crear</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Rellenar</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">Ver</a></li>
+            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Cierre de sesión</a></li>
         </ul>
     </aside>
     <main>
         <div class="form">
-            <p><h3>Created document templates</h3></p>
+            <p><h3>Plantillas de documentos creadas.</h3></p>
             <form action="/GescaCFS/Scripts/PHP/User/Handling_templates/Deleting/deleteTemplatesScript.php" method="POST">
                 <input type="hidden" name="textBoxContent" value="" id="textBoxContent">
                 <div class="textBox" id="textBox">
@@ -83,10 +82,10 @@ if(!isset($_SESSION['valid'])){
                     ?>
                 </div>
                 <p>
-                    <span><input type="button" name="buttonRemove" id="buttonRemove" value="Delete"></span>
+                    <span><input type="button" name="buttonRemove" id="buttonRemove" value="Borrar"></span>
                 </p>
                 <p>
-                    <span><input type="button" name="buttonRemoveAll" id="buttonRemoveAll" value="Remove All" onclick="removeAll()"></span>
+                    <span><input type="button" name="buttonRemoveAll" id="buttonRemoveAll" value="Quitar todo" onclick="removeAll()"></span>
                 </p>
             </form>
         </div>
@@ -149,9 +148,7 @@ if(!isset($_SESSION['valid'])){
         let xhr = new XMLHttpRequest();
 
         xhr.open("POST", "\\GescaCFS\\Scripts\\PHP\\User\\Handling_templates\\Deleting\\deleteTemplatesScript.php", true);
-
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 console.log(xhr.responseText);
@@ -161,6 +158,5 @@ if(!isset($_SESSION['valid'])){
         xhr.send("Name=" + encodeURIComponent(name));
     }
 </script>
-
 </body>
 </html>

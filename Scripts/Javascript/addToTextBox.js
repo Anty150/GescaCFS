@@ -1,5 +1,5 @@
 let i = 0;
-let clickHandler
+let clickHandler;
 let previousClickHandler;
 let previousId = "p0";
 let isSelected = false;
@@ -11,11 +11,11 @@ function addToTextBox(){
     let textBox = document.getElementById("textBox");
 
     if (textName === ""){
-        alert("Name cannot be empty.");
+        alert("El nombre no puede estar vacío.");
         return 0;
     }
     if (textFieldName === ""){
-        alert("Field name cannot be empty.");
+        alert("El nombre del campo no puede estar vacío.");
         return 0;
     }
 

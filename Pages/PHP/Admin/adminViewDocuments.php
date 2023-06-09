@@ -11,13 +11,12 @@ if ($_SESSION['permission'] != 'admin') {
     exit();
 }
 ?>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Panel de administración</title>
     <link rel="stylesheet" href="/GescaCFS/Styles/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -27,21 +26,21 @@ if ($_SESSION['permission'] != 'admin') {
         <ul>
             <?php
             if(isset($_SESSION['valid'])){
-                echo "<p>Welcome ".$_SESSION["username"]."</p>";
+                echo "<p>Bienvenido ".$_SESSION["username"]."</p>";
             }else{
-                echo "<p>Not logged in</p>";
+                echo "<p>No conectado.</p>";
             }
             ?>
-            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Main Page</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Create</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Fill</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">See</a></li>
-            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Logout</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Página principal</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Crear</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Rellenar</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">Ver</a></li>
+            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Cierre de sesión</a></li>
         </ul>
     </aside>
     <main>
         <div class="form">
-            <h3>Users Documents</h3>
+            <h3>Documentos de usuario</h3>
             <div class="ignoreWidthTextBox" id="textBox">
                 <?php
                 $hostName = "localhost";
@@ -101,12 +100,12 @@ if ($_SESSION['permission'] != 'admin') {
                                         let content = responses[0];
                                         let date = responses[1];
 
-                                        let docContent = "Username: " + username + "\n\n";
+                                        let docContent = "Usuario: " + username + "\n\n";
                                         docContent += content + date;
                                         document.getElementById("paragraphDisplayText").innerHTML = ("<pre>" + docContent + "</pre>");
 
-                                        $('#downloadButton').remove(); // Remove existing button if any
-                                        $('#paragraphDisplayText').append('<input type="button" id="downloadButton" value="Download">');
+                                        $('#downloadButton').remove();
+                                        $('#paragraphDisplayText').append('<input type="button" id="downloadButton" value="Descargar">');
 
                                         $('#downloadButton').on('click', function () {
                                             let link = document.createElement('a');
@@ -118,8 +117,8 @@ if ($_SESSION['permission'] != 'admin') {
                                             document.body.removeChild(link);
                                         });
 
-                                        $('#deleteButton').remove(); // Remove existing button if any
-                                        $('#paragraphDisplayText').append('<input type="button" id="deleteButton" value="Delete">');
+                                        $('#deleteButton').remove();
+                                        $('#paragraphDisplayText').append('<input type="button" id="deleteButton" value="Borrar">');
 
                                         $('#deleteButton').on('click', function () {
                                             $.ajax({
@@ -144,7 +143,7 @@ if ($_SESSION['permission'] != 'admin') {
                 </script>
 
             </div>
-            <h3>Document Preview</h3>
+            <h3>Vista previa del documento</h3>
             <div class="ignoreWidthTextBox" id="textPreview">
                 <p id="paragraphDisplayText"></p>
             </div>

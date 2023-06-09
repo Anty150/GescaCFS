@@ -7,13 +7,12 @@ if(!isset($_SESSION['valid'])){
     exit();
 }
 ?>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>See</title>
+    <title>Ver</title>
     <link rel="stylesheet" href="/GescaCFS/Styles/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -23,16 +22,16 @@ if(!isset($_SESSION['valid'])){
         <ul>
             <?php
             if(isset($_SESSION['valid'])){
-                echo "<p>Welcome ".$_SESSION["username"]."</p>";
+                echo "<p>Bienvenido ".$_SESSION["username"]."</p>";
             }else{
-                echo "<p>Not logged in</p>";
+                echo "<p>No conectado.</p>";
             }
             ?>
-            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Main Page</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Create</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Fill</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">See</a></li>
-            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Logout</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Página principal</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Crear</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Rellenar</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">Ver</a></li>
+            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Cierre de sesión</a></li>
         </ul>
     </aside>
     <main>
@@ -98,8 +97,8 @@ if(!isset($_SESSION['valid'])){
                                         let docContent = content + date;
                                         document.getElementById("paragraphDisplayText").innerHTML = ("<pre>" + docContent + "</pre>");
 
-                                        $('#downloadButton').remove(); // Remove existing button if any
-                                        $('#paragraphDisplayText').append('<input type="button" id="downloadButton" value="Download">');
+                                        $('#downloadButton').remove();
+                                        $('#paragraphDisplayText').append('<input type="button" id="downloadButton" value="Descargar">');
 
                                         $('#downloadButton').on('click', function() {
                                             let link = document.createElement('a');
@@ -111,8 +110,8 @@ if(!isset($_SESSION['valid'])){
                                             document.body.removeChild(link);
                                             });
 
-                                        $('#deleteButton').remove(); // Remove existing button if any
-                                        $('#paragraphDisplayText').append('<input type="button" id="deleteButton" value="Delete">');
+                                        $('#deleteButton').remove();
+                                        $('#paragraphDisplayText').append('<input type="button" id="deleteButton" value="Borrar">');
 
                                         $('#deleteButton').on('click', function () {
                                             $.ajax({
@@ -120,7 +119,6 @@ if(!isset($_SESSION['valid'])){
                                                 url: '\\GescaCFS\\Scripts\\PHP\\User\\Handling_documents\\Deleting\\deleteDocumentsScript.php',
                                                 data: {Name: name},
                                                 success: function (response) {
-                                                    console.log(response);
                                                     location.reload();
                                                 },
                                                 error: function (xhr, status, error) {
@@ -137,9 +135,8 @@ if(!isset($_SESSION['valid'])){
                         });
                     });
                 </script>
-
             </div>
-            <h3>Document Preview</h3>
+            <h3>Vista previa del documento</h3>
             <div class="ignoreWidthTextBox" id="textPreview">
                 <p id="paragraphDisplayText"></p>
             </div>

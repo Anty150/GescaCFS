@@ -7,13 +7,12 @@ if(!isset($_SESSION['valid'])){
     exit();
 }
 ?>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Delete Document</title>
+    <title>Borrar documentos</title>
     <link rel="stylesheet" href="/GescaCFS/Styles/styles.css">
 </head>
 <body>
@@ -22,29 +21,29 @@ if(!isset($_SESSION['valid'])){
         <ul>
             <?php
             if(isset($_SESSION['valid'])){
-                echo "<p>Welcome ".$_SESSION["username"]."</p>";
+                echo "<p>Bienvenido ".$_SESSION["username"]."</p>";
             }else{
-                echo "<p>Not logged in</p>";
+                echo "<p>No conectado.</p>";
             }
             ?>
-            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Main Page</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Create</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Fill</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">See</a></li>
-            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Logout</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Página principal</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Crear</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Rellenar</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">Ver</a></li>
+            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Cierre de sesión</a></li>
         </ul>
     </aside>
     <main>
         <?php
         if(isset($_SESSION['isDuplicate'])){
             if ($_SESSION['isDuplicate']){
-                echo "<p>Name already exists!</p>";
+                echo "<p>¡El nombre ya existe!</p>";
                 $_SESSION['isDuplicate'] = false;
             }
         }
         ?>
         <div class="form">
-            <p><h3>Created documents</h3></p>
+            <p><h3>Documentos creados</h3></p>
             <form action="/GescaCFS/Scripts/PHP/User/Handling_documents/Deleting/deleteDocumentsScript.php" method="POST">
                 <input type="hidden" name="textBoxContent" value="" id="textBoxContent">
                 <div class="textBox" id="textBox">
@@ -91,10 +90,10 @@ if(!isset($_SESSION['valid'])){
                     ?>
                 </div>
                 <p>
-                    <span><input type="button" name="buttonRemove" id="buttonRemove" value="Delete"></span>
+                    <span><input type="button" name="buttonRemove" id="buttonRemove" value="Borrar"></span>
                 </p>
                 <p>
-                    <span><input type="button" name="buttonRemoveAll" id="buttonRemoveAll" value="Remove All" onclick="removeAll()"></span>
+                    <span><input type="button" name="buttonRemoveAll" id="buttonRemoveAll" value="Quitar todo" onclick="removeAll()"></span>
                 </p>
             </form>
         </div>
@@ -135,7 +134,6 @@ if(!isset($_SESSION['valid'])){
                 rowToRemove.remove();
                 isSelected = false;
 
-                // Wywołaj funkcję do usunięcia rekordu z bazy danych
                 deleteFromDatabase(rowToRemove.innerText);
             }
         };
@@ -155,24 +153,15 @@ if(!isset($_SESSION['valid'])){
     }
 
     function deleteFromDatabase(name) {
-        // Tworzymy nowy obiekt XMLHTTPRequest
         let xhr = new XMLHttpRequest();
 
-        // Ustawiamy metodę i adres URL skryptu usuwającego
         xhr.open("POST", "\\GescaCFS\\Scripts\\PHP\\User\\Handling_documents\\Deleting\\deleteDocumentsScript.php", true);
-
-        // Ustawiamy nagłówek żądania, aby wysłać dane w formacie URL-encoded
         xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        // Definiujemy funkcję zwrotną, która zostanie wywołana po otrzymaniu odpowiedzi od serwera
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                // Wyświetlamy odpowiedź serwera w konsoli
                 console.log(xhr.responseText);
             }
         };
-
-        // Wysyłamy żądanie POST z nazwą do usunięcia jako parametrem
         xhr.send("Name=" + encodeURIComponent(name));
     }
 </script>

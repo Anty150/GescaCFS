@@ -6,7 +6,6 @@ if (isset($_SESSION['valid'])) {
     $username = "root";
     $password = "";
     $dbName = "gescatest";
-
     $conn = new mysqli($host, $username, $password, $dbName);
 
     if ($conn->connect_error) {

@@ -7,6 +7,7 @@ if (!isset($_SESSION['valid'])) {
 }
 else if ($_SESSION['permission'] != 'admin') {
     header("Location: /GescaCFS/Pages/PHP/Other/Main/mainPage.php");
+    exit();
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -31,8 +32,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->close();
     $conn->close();
 
-    echo "Document deleted successfully.";
+    echo "Documento eliminado correctamente.";
 } else {
-    echo "Invalid request.";
+    echo "Petición inválida.";
 }
 ?>

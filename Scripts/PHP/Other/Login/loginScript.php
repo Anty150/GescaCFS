@@ -5,7 +5,6 @@
     $username = "root";
     $password = "";
     $dbName = "gescatest";
-
     $conn = new mysqli($host, $username, $password, $dbName);
 
     if ($conn->connect_error) {
@@ -33,7 +32,7 @@
             $_SESSION['username'] = $loginUsername;
             $_SESSION['permission'] = $permission;
 
-            echo "Logged";
+            echo "Conectado";
         } else {
             $_SESSION['loginFailed'] = true;
         }

@@ -6,6 +6,7 @@ if (!isset($_SESSION['valid'])) {
 }
 else if ($_SESSION['permission'] != 'admin') {
     header("Location: /GescaCFS/Pages/PHP/Other/Main/mainPage.php");
+    exit();
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selectedName = $_POST['selectedName'];

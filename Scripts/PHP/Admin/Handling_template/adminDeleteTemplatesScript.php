@@ -7,6 +7,7 @@ if (!isset($_SESSION['valid'])) {
 }
 else if ($_SESSION['permission'] != 'admin') {
     header("Location: /GescaCFS/Pages/PHP/Other/Main/mainPage.php");
+    exit();
 }else {
     $host = "localhost";
     $username = "root";
@@ -29,9 +30,9 @@ else if ($_SESSION['permission'] != 'admin') {
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
-            echo "Record deleted successfully";
+            echo "Registro eliminado correctamente";
         } else {
-            echo "Record not found or error deleting record.";
+            echo "Registro no encontrado o error al borrar registro.";
         }
 
         $stmt->close();

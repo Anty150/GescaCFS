@@ -26,7 +26,6 @@ if (!isset($_SESSION['valid'])) {
                 $textFieldName = $spanElements->item(0)->nodeValue;
                 $comboType = $spanElements->item(1)->nodeValue;
 
-                // Sanitize and validate field values
                 $sanitizedTextFieldName = filter_var($textFieldName, FILTER_SANITIZE_STRING);
                 $sanitizedComboType = filter_var($comboType, FILTER_SANITIZE_STRING);
 
@@ -62,7 +61,6 @@ if (!isset($_SESSION['valid'])) {
         }
         $stmt->close();
 
-        // Check if name already exists
         $stmt = $conn->prepare("SELECT `name` FROM `names` WHERE `name` = ? AND `User ID` = ?");
         $stmt->bind_param("si", $nameValue, $userID);
         $stmt->execute();
@@ -70,7 +68,6 @@ if (!isset($_SESSION['valid'])) {
         if ($result->num_rows > 0) {
             $_SESSION['isDuplicate'] = true;
         } else {
-            // Adding new Name to names table
             $stmt = $conn->prepare("INSERT INTO `names` (`ID`, `Name`, `User ID`) VALUES (NULL, ?, ?)");
             $stmt->bind_param("si", $nameValue, $userID);
             if ($stmt->execute()) {
@@ -79,11 +76,10 @@ if (!isset($_SESSION['valid'])) {
                 $stmt->close();
 
                 foreach ($paragraphValues as $values) {
-                    // Adding new Field names corresponding to the created name
                     $stmt = $conn->prepare("INSERT INTO `field names` (`ID`, `Field Name`, `Type`, `Name ID`, `User ID`) VALUES (NULL, ?, ?, ?, ?)");
                     $stmt->bind_param("ssii", $values['textFieldName'], $values['comboType'], $nameID, $userID);
                     if ($stmt->execute()) {
-                        echo "New record created successfully";
+                        echo "Nuevo registro creado con éxito";
                     } else {
                         echo "Error: " . $stmt->error;
                     }

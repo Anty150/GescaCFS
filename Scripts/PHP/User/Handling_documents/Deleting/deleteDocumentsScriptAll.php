@@ -35,9 +35,9 @@ if (!isset($_SESSION['valid'])) {
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
-            echo "All records deleted";
+            echo "Todos los registros eliminados";
         } else {
-            echo "Records not found";
+            echo "Registros no encontrados";
         }
 
         $stmt->close();

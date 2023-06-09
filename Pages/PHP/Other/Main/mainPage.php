@@ -2,11 +2,10 @@
 <?php
     session_start();
 ?>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Main Page</title>
     <link rel="stylesheet" href="/GescaCFS/Styles/styles.css">
@@ -16,21 +15,21 @@
         <aside>
             <ul>
                 <?php
-                    if(isset($_SESSION['valid'])){
-                        echo "<p>Welcome ".$_SESSION["username"]."</p>";
-                        $isHidden = false;
-                    }else{
-                        echo "<p>Not logged in</p>";
-                        $isHidden = true;
-                    }
+                if(isset($_SESSION['valid'])){
+                    echo "<p>Bienvenido ".$_SESSION["username"]."</p>";
+                    $isHidden = false;
+                }else{
+                    echo "<p>No conectado.</p>";
+                    $isHidden = true;
+                }
                 ?>
-                <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Main Page</a></li>
-                <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Create</a></li>
-                <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Fill</a></li>
-                <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">See</a></li>
+                <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Página principal</a></li>
+                <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Crear</a></li>
+                <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Rellenar</a></li>
+                <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">Ver</a></li>
                 <?php
                 if(isset($_SESSION['valid'])){
-                    echo "<li><a href="."/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php".">Logout</a></li>";
+                    echo "<li><a href="."/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php".">Cierre de sesión</a></li>";
                 }
                 ?>
             </ul>
@@ -39,51 +38,49 @@
             <?php
             if(isset($_SESSION['registered'])){
                 if($_SESSION['registered']){
-                    echo "<p>Succesfuly registered you can now log in</p>";
+                    echo "<p>Nombre de usuario no disponible o no se proporcionó ninguno.</p>";
                     $_SESSION['registered'] = false;
                 }
             }
             if(isset($_SESSION['loginFailed'])){
                 if($_SESSION['loginFailed']){
-                    echo "<p>Username or password is incorrect</p>";
+                    echo "<p>El nombre de usuario o la contraseña son incorrectos.</p>";
                     $_SESSION['loginFailed'] = false;
                 }
             }
             if(isset($_SESSION['registerBadPassword'])){
                 if($_SESSION['registerBadPassword']){
-                    echo "<p>The password must be at least 8 characters long</p>";
+                    echo "<p>La contraseña debe tener al menos 8 caracteres.</p>";
                     $_SESSION['registerBadPassword'] = false;
                 }
             }
             if(isset($_SESSION['registerBadUsername'])){
                 if($_SESSION['registerBadUsername']){
-                    echo "<p>Username taken or none was provided</p>";
+                    echo "<p>Se tomó el nombre de usuario o no se proporcionó ninguno.</p>";
                     $_SESSION['registerBadUsername'] = false;
                 }
             }
             ?>
             <?php if ($isHidden): ?>
-                <p class="manager">Login and register</p>
-                <a href="/GescaCFS/Pages/PHP/Other/Login/login.php"><input type="button" value="Login"></a>
-                <a href="/GescaCFS/Pages/PHP/Other/Register/register.php"><input type="button" value="Register"></a>
+                <p class="manager">Inicio sesión y regístro</p>
+                <a href="/GescaCFS/Pages/PHP/Other/Login/login.php"><input type="button" value="Iniciar sesión"></a>
+                <a href="/GescaCFS/Pages/PHP/Other/Register/register.php"><input type="button" value="Registro"></a>
             <?php endif; ?>
 
             <?php if (!$isHidden): ?>
-                <p class="manager">File manager</p>
-
-                <a href="/GescaCFS/Pages/PHP/User/userDeleteTemplates.php"><input type="button" value="Delete Templates"></a>
-                <a href="/GescaCFS/Pages/PHP/User/userDeleteDocuments.php"><input type="button" value="Delete Documents"></a>
+                <p class="manager">Gestor de archivos</p>
+                <a href="/GescaCFS/Pages/PHP/User/userDeleteTemplates.php"><input type="button" value="Borrar plantillas"></a>
+                <a href="/GescaCFS/Pages/PHP/User/userDeleteDocuments.php"><input type="button" value="Borrar documentos"></a>
                 <hr>
-                <p class="manager">Account manager</p>
-                <a href="/GescaCFS/Scripts/PHP/User/Handling_account/deleteAccountScript.php"><input type="button" value="Delete Account" onclick="return confirm('Are you sure you want to delete your account? This action cannot be undone.');"></a>
+                <p class="manager">Gestor de cuentas</p>
+                <a href="/GescaCFS/Scripts/PHP/User/Handling_account/deleteAccountScript.php"><input type="button" value="Borrar cuenta" onclick="return confirm('¿Está seguro de que desea eliminar su cuenta? Esta acción no se puede deshacer.');"></a>
                 <?php if ($_SESSION['permission'] == 'admin'): ?>
                     <hr>
-                    <p class="manager">Admin panel</p>
-                    <a href="/GescaCFS/Pages/PHP/Admin/adminViewTemplates.php"><input type="button" value="Admin View Templates"></a>
-                    <a href="/GescaCFS/Pages/PHP/Admin/adminViewDocuments.php"><input type="button" value="Admin View Documents"></a>
+                    <p class="manager">Panel de administración</p>
+                    <a href="/GescaCFS/Pages/PHP/Admin/adminViewTemplates.php"><input type="button" value="Ver plantillas"></a>
+                    <a href="/GescaCFS/Pages/PHP/Admin/adminViewDocuments.php"><input type="button" value="Ver documentos"></a>
                 <?php endif; ?>
             <?php endif;?>
-
         </main>
     </div>
 </body>

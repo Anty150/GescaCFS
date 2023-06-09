@@ -32,7 +32,7 @@
 
             if ($stmt->execute()) {
                 $_SESSION['registered'] = true;
-                echo "New record created successfully";
+                echo "Nuevo registro creado con éxito";
             } else {
                 echo "Error: " . $stmt->error;
             }

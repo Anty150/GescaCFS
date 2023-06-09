@@ -42,7 +42,7 @@ else{
             }
             $response1 = implode('|', $fieldNames);
         } else {
-            $response1 = "No field names found.";
+            $response1 = "No se han encontrado nombres de campo.";
         }
 
         $queryTypesTB = "SELECT `type` FROM `field names` JOIN names ON `field names`.`Name ID` = names.ID WHERE names.Name = ? AND `field names`.`User ID` = ?";
@@ -58,7 +58,7 @@ else{
             }
             $response2 = implode('|', $names);
         } else {
-            $response2 = "No names found.";
+            $response2 = "No se han encontrado nombres.";
         }
 
         $conn->close();

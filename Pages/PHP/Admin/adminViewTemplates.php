@@ -4,18 +4,19 @@ session_start();
 
 if(!isset($_SESSION['valid'])){
     header("Location:/GescaCFS/Scripts/PHP/Other/Login/login.php");
+    exit();
 }
 if ($_SESSION['permission'] != 'admin') {
     header("Location:/GescaCFS/Pages/PHP/Other/Main/mainPage.php");
+    exit();
 }
 ?>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Panel de administración</title>
     <link rel="stylesheet" href="/GescaCFS/Styles/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -25,21 +26,21 @@ if ($_SESSION['permission'] != 'admin') {
         <ul>
             <?php
             if(isset($_SESSION['valid'])){
-                echo "<p>Welcome ".$_SESSION["username"]."</p>";
+                echo "<p>Bienvenido ".$_SESSION["username"]."</p>";
             }else{
-                echo "<p>Not logged in</p>";
+                echo "<p>No conectado.</p>";
             }
             ?>
-            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Main Page</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Create</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Fill</a></li>
-            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">See</a></li>
-            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Logout</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Página principal</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Crear</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Rellenar</a></li>
+            <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">Ver</a></li>
+            <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Cierre de sesión</a></li>
         </ul>
     </aside>
     <main>
         <div class="form">
-            <h3>Users Templates</h3>
+            <h3>Plantillas de usuario</h3>
             <div class="textBox" id="textBox">
                 <?php
                 $hostName = "localhost";
@@ -96,7 +97,7 @@ if ($_SESSION['permission'] != 'admin') {
                                         document.getElementById('paragraphDisplayText').innerHTML = '<pre>' + response + '</pre>';
 
                                         $('#deleteButton').remove(); // Remove existing button if any
-                                        $('#paragraphDisplayText').append('<input type="button" id="deleteButton" value="Delete">');
+                                        $('#paragraphDisplayText').append('<input type="button" id="deleteButton" value="Borrar">');
 
                                         $('#deleteButton').on('click', function () {
                                             $.ajax({
@@ -104,7 +105,6 @@ if ($_SESSION['permission'] != 'admin') {
                                                 url: '\\GescaCFS\\Scripts\\PHP\\Admin\\Handling_template\\adminDeleteTemplatesScript.php',
                                                 data: {Name: name, UserID: userId},
                                                 success: function (response) {
-                                                    console.log(response);
                                                     location.reload();
                                                 },
                                                 error: function (xhr, status, error) {
@@ -122,7 +122,7 @@ if ($_SESSION['permission'] != 'admin') {
                 </script>
 
             </div>
-            <h3>Templates Preview</h3>
+            <h3>Vista previa de plantillas</h3>
             <div class="ignoreWidthTextBox" id="textPreview">
                 <p id="paragraphDisplayText"></p>
             </div>

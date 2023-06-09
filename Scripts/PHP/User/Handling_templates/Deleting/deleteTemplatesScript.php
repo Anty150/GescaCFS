@@ -37,9 +37,9 @@ if (!isset($_SESSION['valid'])) {
         $stmt->execute();
 
         if ($stmt->affected_rows > 0) {
-            echo "Record deleted successfully";
+            echo "Registro eliminado correctamente.";
         } else {
-            echo "Record not found or error deleting record.";
+            echo "Registro no encontrado o error al borrar registro.";
         }
 
         $stmt->close();

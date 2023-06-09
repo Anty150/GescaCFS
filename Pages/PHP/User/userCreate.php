@@ -7,13 +7,12 @@
         exit();
     }
 ?>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta name="viewport"content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create</title>
+    <title>Crear</title>
     <link rel="stylesheet" href="/GescaCFS/Styles/styles.css">
     <script src="/GescaCFS/Scripts/Javascript/addToTextBox.js"></script>
 </head>
@@ -23,23 +22,23 @@
             <ul>
                 <?php
                 if(isset($_SESSION['valid'])){
-                    echo "<p>Welcome ".$_SESSION["username"]."</p>";
+                    echo "<p>Bienvenido ".$_SESSION["username"]."</p>";
                 }else{
-                    echo "<p>Not logged in</p>";
+                    echo "<p>No conectado.</p>";
                 }
                 ?>
-                <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Main Page</a></li>
-                <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Create</a></li>
-                <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Fill</a></li>
-                <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">See</a></li>
-                <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Logout</a></li>
+                <li><a href="/GescaCFS/Pages/PHP/Other/Main/mainPage.php">Página principal</a></li>
+                <li><a href="/GescaCFS/Pages/PHP/User/userCreate.php">Crear</a></li>
+                <li><a href="/GescaCFS/Pages/PHP/User/userFill.php">Rellenar</a></li>
+                <li><a href="/GescaCFS/Pages/PHP/User/userSee.php">Ver</a></li>
+                <li><a href="/GescaCFS/Scripts/PHP/Other/Logout/newLogoutScript.php">Cierre de sesión</a></li>
             </ul>
         </aside>
         <main>
             <?php
                 if(isset($_SESSION['isDuplicate'])){
                     if ($_SESSION['isDuplicate']){
-                        echo "<p>Name already exists!</p>";
+                        echo "<p>¡El nombre ya existe!</p>";
                         $_SESSION['isDuplicate'] = false;
                     }
                 }
@@ -47,21 +46,21 @@
             <div class="form">
                 <form action="/GescaCFS/Scripts/PHP/User/Handling_templates/Other/handleAddingParagraphsToDBScript.php" method="POST" onsubmit="return validateForm()">
                     <p>
-                        <span><label for="textName">Name</label></span>
+                        <span><label for="textName">Nombre</label></span>
                         <span><input type="text" name="textName" id="textName"></span>
                     </p>
 
                     <p>
-                        <span><label for="textFieldName">Field name</label></span>
+                        <span><label for="textFieldName">Nombre del campo</label></span>
                         <span><input type="text" name="textFieldName" id="textFieldName"></span>
                     </p>
 
                     <p>
-                        <span><label for="comboType">Type</label></span>
+                        <span><label for="comboType">Tipo</label></span>
                         <span><select name="comboType" id="comboType">
-                            <option value="text">Text</option>
-                            <option value="date">Date</option>
-                            <option value="checkbox">Checkbox</option>
+                            <option value="text">Texto</option>
+                            <option value="date">Fecha</option>
+                            <option value="checkbox">Casilla de verificación</option>
                         </select></span>
                     </p>
 
@@ -86,7 +85,7 @@
             let textBoxContent = document.getElementById("textBoxContent").value;
 
             if (name.trim() === "" || fieldName.trim() === "" || textBoxContent.trim() === "") {
-                alert("Please fill all the fields.");
+                alert("Por favor, rellene todos los campos.");
                 return false;
             }
         }

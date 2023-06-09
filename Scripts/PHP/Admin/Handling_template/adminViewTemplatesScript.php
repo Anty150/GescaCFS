@@ -2,9 +2,11 @@
 session_start();
 if(!isset($_SESSION['valid'])){
     header("Location: /GescaCFS/Scripts/PHP/Other/Login/loginScript.php");
+    exit();
 }
 if ($_SESSION['permission'] != 'admin') {
     header("Location: /GescaCFS/Pages/PHP/Other/Main/mainPage.php");
+    exit();
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $selectedName_ID = $_POST['selectedID'];
